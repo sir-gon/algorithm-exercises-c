@@ -39,7 +39,12 @@ unsigned long HACKERRANK_PROJECTEULER_euler001(int a, int b, int n) {
   // Since, we need the sum of multiples less than N
   n = n - 1;
 
-  unsigned long lcm = (a * b) / HACKERRANK_PROJECTEULER_gcd(a, b);
+  unsigned long gcd = HACKERRANK_PROJECTEULER_gcd(a, b);
+  if (gcd == 0) {
+    return 0;
+  }
+
+  unsigned long lcm = (a * b) / gcd;
 
   return HACKERRANK_PROJECTEULER_sum_of_arithmetic_progression(n, a) +
          HACKERRANK_PROJECTEULER_sum_of_arithmetic_progression(n, b) -
