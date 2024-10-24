@@ -1,0 +1,51 @@
+---
+name: C/C++ CI Coverage
+
+on: # yamllint disable-line rule:truthy
+  push:
+    branches: ["main"]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  coverage:
+    name: C/C++ CMake CI Coverage
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: Install Tools
+        run: |
+          sudo apt-get install lcov
+
+      - name: Check Tools
+        run: |
+          make --version
+          cmake --version
+          vcpkg --version
+          lcov --version
+
+      - name: Install dependencies
+        run: |
+          make dependencies
+
+      # yamllint disable rule:line-length
+      - name: Build
+        run: |
+          export VCPKG_ROOT=/usr/local/share/vcpkg
+          make build
+      # yamllint enable rule:line-length
+      - name: Test / Coverage
+        run: make coverage
+
+      - name: Upload coverage reports to Codecov with GitHub Action
+        uses: codecov/codecov-action@v4
+        with:
+          directory: ./coverage
+          files: coverage/lcov.info
+          token: ${{ secrets.CODECOV_TOKEN }} # required
+          verbose: true # optional (default = false)

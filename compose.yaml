@@ -1,0 +1,51 @@
+---
+services:
+  algorithm-exercises-c-test:
+    image: algorithm-exercises-c:test
+    build:
+      context: .
+      target: testing
+    environment:
+      LOG_LEVEL: ${LOG_LEVEL:-info} ## (1) ## info | debug
+      BRUTEFORCE: ${BRUTEFORCE:-false} ## (1) ## true | false
+    volumes:
+      - ./coverage:/app/coverage
+    profiles: ["testing"]
+
+  algorithm-exercises-c-lint:
+    image: algorithm-exercises-c:lint
+    build:
+      context: .
+      target: lint
+    # environment:
+    #   LOG_LEVEL: ${LOG_LEVEL:-info} ## (1) ## info | debug
+    #   BRUTEFORCE: ${BRUTEFORCE:-false} ## (1) ## true | false
+    volumes:
+      - ./:/app
+    profiles: ["lint"]
+
+  algorithm-exercises-c-dev:
+    image: algorithm-exercises-c:dev
+    build:
+      context: .
+      target: development
+    environment:
+      LOG_LEVEL: ${LOG_LEVEL:-info} ## (1) ## info | debug
+      BRUTEFORCE: ${BRUTEFORCE:-false} ## (1) ## true | false
+    volumes:
+      - ./:/app
+    profiles: ["development"]
+
+  algorithm-exercises-c:
+    image: algorithm-exercises-c:latest
+    build:
+      context: .
+      target: production
+    # volumes:
+    #   - ./:/app
+    profiles: ["production"]
+
+## REFERENCES:
+## (1) Passing Environment variable with fallback value:
+##    https://stackoverflow.com/a/70772707/6366150
+##

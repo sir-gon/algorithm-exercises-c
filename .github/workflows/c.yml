@@ -1,0 +1,41 @@
+---
+name: C/C++ CI Tests
+
+on: # yamllint disable-line rule:truthy
+  push:
+    branches: ["main"]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: C/C++ CMake CI Test
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        os: ["windows-latest", "ubuntu-latest", "macOS-latest"]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: Check Tools
+        run: |
+          make --version
+          cmake --version
+          vcpkg --version
+
+      - name: Install dependencies
+        run: |
+          make dependencies
+
+      # yamllint disable rule:line-length
+      - name: Build
+        run: |
+          export VCPKG_ROOT=/usr/local/share/vcpkg
+          make build
+      # yamllint enable rule:line-length
+      - name: Test
+        run: make test
