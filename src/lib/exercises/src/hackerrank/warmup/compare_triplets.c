@@ -1,16 +1,20 @@
-#include <exercises/hackerrank/warmup/compare_triplets.h>
+#include <stdlib.h>
 
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#include <exercises/basic/common.h>
+#include <exercises/hackerrank/warmup/compare_triplets.h>
 
 /**
  * @link Problem definition [[docs/hackerrank/warmup/compare_triplets.md]]
  */
 
-int* HACKERRANK_WARMUP_compareTriplets(int a_count, const int *a, int b_count,
+int *HACKERRANK_WARMUP_compareTriplets(int a_count, const int *a, int b_count,
                                        const int *b, int *result_count) {
 
   *result_count = 2;
-  static int awards[2] = {0, 0};
+  int *awards = malloc(sizeof(int) * *result_count);
+
+  awards[0] = 0;
+  awards[1] = 0;
 
   for (int i = 0; i < MIN(a_count, b_count); i++) {
     if (a[i] > b[i]) {

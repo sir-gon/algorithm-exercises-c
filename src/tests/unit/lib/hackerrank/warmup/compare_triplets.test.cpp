@@ -38,5 +38,7 @@ TEST_CASE("compareTriplets JSON Test Cases",
     std::vector<int> result_as_vector(result, result + result_count);
 
     CHECK(result_as_vector == testcase["expected"]);
+
+    free(result);
   }
 }
