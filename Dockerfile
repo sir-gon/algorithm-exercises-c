@@ -18,7 +18,7 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 
 # vcpkg Package Manager
-ADD https://github.com/microsoft/vcpkg/archive/refs/tags/2024.08.23.tar.gz vcpkg.tar.gz
+ADD https://github.com/microsoft/vcpkg/archive/refs/tags/2024.10.21.tar.gz vcpkg.tar.gz
 RUN apt-get -y update && \
   apt-get -y install --no-install-recommends --no-install-suggests \
   ca-certificates curl git unzip zip && \
