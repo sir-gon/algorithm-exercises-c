@@ -16,7 +16,7 @@ char *format_result(double number) {
   return buffer;
 }
 
-char **HACKERRANK_WARMUP_plusMinusCalculate(int arr_count, int *arr) {
+char **HACKERRANK_WARMUP_plusMinusCalculate(int arr_count, const int *arr) {
   int positives = 0;
   int negatives = 0;
   int zeros = 0;
@@ -54,11 +54,12 @@ char **HACKERRANK_WARMUP_plusMinusCalculate(int arr_count, int *arr) {
   return answer;
 }
 
-void HACKERRANK_WARMUP_plusMinus(int arr_count, int *arr) {
+void HACKERRANK_WARMUP_plusMinus(int arr_count, const int *arr) {
   char **output = HACKERRANK_WARMUP_plusMinusCalculate(arr_count, arr);
 
-  for (int i = 0; i < arr_count; i++) {
+  for (int i = 0; i < HACKERRANK_WARMUP_PLUSMINUS_LIMIT_ANSWERS; i++) {
     printf("%s", output[i]);
+    free(output[i]);
   }
 
   free(output);

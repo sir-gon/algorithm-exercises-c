@@ -23,15 +23,22 @@ TEST_CASE("plusMinus JSON Test Cases", "[hackerrank] [jsontestcase] [warmup]") {
   for (auto testcase : data) {
     auto input_size = static_cast<int>(testcase["input"].size());
     std::vector<int> input_vector = testcase["input"];
-    int *input_array = input_vector.data();
-
-    HACKERRANK_WARMUP_plusMinus(input_size, input_array);
+    const int *input_array = input_vector.data();
 
     char **result =
         HACKERRANK_WARMUP_plusMinusCalculate(input_size, input_array);
 
-    std::vector<std::string> result_as_vector(result, result + input_size);
+    std::vector<std::string> result_as_vector;
+
+    for (int i = 0; i < HACKERRANK_WARMUP_PLUSMINUS_LIMIT_ANSWERS; i++) {
+      result_as_vector.emplace_back(result[i]);
+      free(result[i]);
+    }
+    free(result);
 
     CHECK(result_as_vector == testcase["expected"]);
+
+    // Just call void function, to collect coverage
+    HACKERRANK_WARMUP_plusMinus(input_size, input_array);
   }
 }
