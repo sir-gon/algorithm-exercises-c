@@ -1,4 +1,4 @@
-FROM ubuntu:24.10 AS init
+FROM ubuntu:noble-20241118.1 AS init
 
 ENV WORKDIR=/app
 WORKDIR ${WORKDIR}
@@ -15,7 +15,7 @@ ENV TZ=Etc/UTC
 
 # build tools
 RUN apt-get update \
-  && apt-get -y install --no-install-recommends --no-install-suggests build-essential cmake gcc g++ make pkg-config \
+  && apt-get -y install --no-install-recommends --no-install-suggests build-essential cmake g++ gcc make pkg-config \
   && rm -rf /var/lib/apt/lists/* \
   && make --version \
   && cmake --version \
@@ -112,7 +112,7 @@ COPY --from=builder ${WORKDIR}/build ${WORKDIR}/
 
 CMD ["make", "test"]
 
-FROM ubuntu:24.10 AS production
+FROM ubuntu:noble-20241118.1 AS production
 
 ENV LOG_LEVEL=INFO
 ENV BRUTEFORCE=false
