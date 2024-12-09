@@ -119,24 +119,24 @@ compose/rebuild: env
 
 compose/lint/markdown: compose/build
 	${DOCKER_COMPOSE} --profile lint build
-	${DOCKER_COMPOSE} --profile lint run --rm algorithm-exercises-cpp-lint make lint/markdown
+	${DOCKER_COMPOSE} --profile lint run --rm algorithm-exercises-c-lint make lint/markdown
 
 compose/lint/yaml: compose/build
-	${DOCKER_COMPOSE} --profile lint run --rm algorithm-exercises-cpp-lint make lint/yaml
+	${DOCKER_COMPOSE} --profile lint run --rm algorithm-exercises-c-lint make lint/yaml
 
 compose/test/styling: compose/build
-	${DOCKER_COMPOSE} --profile lint run --rm algorithm-exercises-cpp-lint make test/styling
+	${DOCKER_COMPOSE} --profile lint run --rm algorithm-exercises-c-lint make test/styling
 
 compose/test/static: compose/build
-	${DOCKER_COMPOSE} --profile lint run --rm algorithm-exercises-cpp-lint make test/static
+	${DOCKER_COMPOSE} --profile lint run --rm algorithm-exercises-c-lint make test/static
 
 compose/lint: compose/lint/markdown compose/lint/yaml compose/test/styling compose/test/static
 
 compose/test: compose/build
-	${DOCKER_COMPOSE} --profile testing run --rm algorithm-exercises-cpp-test make test
+	${DOCKER_COMPOSE} --profile testing run --rm algorithm-exercises-c-test make test
 
 compose/run: compose/build
-	${DOCKER_COMPOSE} --profile production run --rm algorithm-exercises-cpp ls -alhR
+	${DOCKER_COMPOSE} --profile production run --rm algorithm-exercises-c ls -alhR
 
 all: env dependencies test
 
