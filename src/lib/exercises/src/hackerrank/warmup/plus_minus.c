@@ -54,13 +54,20 @@ char **HACKERRANK_WARMUP_plusMinusCalculate(int arr_count, const int *arr) {
   return answer;
 }
 
+void HACKERRANK_WARMUP_freePlusMinus(char **plusMinusAnswer, int n) {
+  for (int i = 0; i < n; i++) {
+    free(plusMinusAnswer[i]);
+  }
+  free(plusMinusAnswer);
+}
+
 void HACKERRANK_WARMUP_plusMinus(int arr_count, const int *arr) {
   char **output = HACKERRANK_WARMUP_plusMinusCalculate(arr_count, arr);
 
   for (int i = 0; i < HACKERRANK_WARMUP_PLUSMINUS_LIMIT_ANSWERS; i++) {
     printf("%s", output[i]);
-    free(output[i]);
   }
 
-  free(output);
+  HACKERRANK_WARMUP_freePlusMinus(output,
+                                  HACKERRANK_WARMUP_PLUSMINUS_LIMIT_ANSWERS);
 }
