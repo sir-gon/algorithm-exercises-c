@@ -32,9 +32,9 @@ TEST_CASE("plusMinus JSON Test Cases", "[hackerrank] [jsontestcase] [warmup]") {
 
     for (int i = 0; i < HACKERRANK_WARMUP_PLUSMINUS_LIMIT_ANSWERS; i++) {
       result_as_vector.emplace_back(result[i]);
-      free(result[i]);
     }
-    free(result);
+    HACKERRANK_WARMUP_freePlusMinus(result,
+                                    HACKERRANK_WARMUP_PLUSMINUS_LIMIT_ANSWERS);
 
     CHECK(result_as_vector == testcase["expected"]);
 
