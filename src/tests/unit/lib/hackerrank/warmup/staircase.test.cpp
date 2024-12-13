@@ -29,6 +29,8 @@ TEST_CASE("staircase", "[warmup]") {
       result_as_vector.emplace_back(result[i]);
     }
 
+    HACKERRANK_WARMUP_freeStaircase(result, input);
+
     CHECK(result_as_vector == testcase["expected"]);
 
     // Just call void function, to collect coverage
