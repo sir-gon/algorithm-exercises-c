@@ -1,5 +1,6 @@
 # Environment notes
 
+## For MacOS
 OS: MacOS Sonoma 14.6.1 (23G93)
 
 ```sh
@@ -10,11 +11,7 @@ uname -a
 Darwin epoch.local 23.6.0 Darwin Kernel Version 23.6.0: Mon Jul 29 21:13:00 PDT 2024; root:xnu-10063.141.2~1/RELEASE_X86_64 x86_64
 ```
 
-## Enable debugging with VSCode
-
-<https://github.com/microsoft/vscode-cmake-tools/issues/3034>
-
-## Tools
+### Tools
 
 Required tools:
 
@@ -30,6 +27,14 @@ brew install --cask cmake
 brew install clang-format cppcheck make vcpkg
 
 ```
+
+## IDE: VSCode Notes
+
+### Enable debugging with VSCode
+
+<https://github.com/microsoft/vscode-cmake-tools/issues/3034>
+
+
 
 ## Visual Studio Code extensions
 
