@@ -28,13 +28,29 @@ brew install clang-format cppcheck make vcpkg
 
 ```
 
+## Windows (MinGW)
+
+### Install vcpkg
+
+https://learn.microsoft.com/en-us/vcpkg/get_started/get-started?pivots=shell-powershell
+
+### Configure vcpkg
+
+Set default host triplet to MinGW as follows:
+
+https://learn.microsoft.com/en-us/vcpkg/users/config-environment#vcpkg_default_host_triplet
+
+Then check value:
+
+```
+VCPKG_DEFAULT_HOST_TRIPLET=x64-mingw-dynamic
+```
+
 ## IDE: VSCode Notes
 
 ### Enable debugging with VSCode
 
 <https://github.com/microsoft/vscode-cmake-tools/issues/3034>
-
-
 
 ## Visual Studio Code extensions
 
