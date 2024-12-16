@@ -28,23 +28,17 @@ brew install clang-format cppcheck make vcpkg
 
 ```
 
-## Windows (Visual Studio 2022)
+## IDE: Windows (Visual Studio 2022)
 
-### Install vcpkg
+Required components:
 
-<https://learn.microsoft.com/en-us/vcpkg/get_started/get-started?pivots=shell-powershell>
-
-### Configure vcpkg
-
-Set default host triplet to MinGW as follows:
-
-<https://learn.microsoft.com/en-us/vcpkg/users/config-environment#vcpkg_default_host_triplet>
-
-Then check value:
-
-```
-VCPKG_DEFAULT_HOST_TRIPLET=x64-mingw-dynamic
-```
+* NuGet
+* Redistributable update for C++ 2022
+* CMake tools for C++ in Windows
+* AddressSanitizer for C++
+* vcpkg
+* Windows 10 SDK
+* Git for windows
 
 ## IDE: VSCode Notes
 
