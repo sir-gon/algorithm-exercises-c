@@ -28,17 +28,17 @@ brew install clang-format cppcheck make vcpkg
 
 ```
 
-## Windows (MinGW)
+## Windows (Visual Studio 2022)
 
 ### Install vcpkg
 
-https://learn.microsoft.com/en-us/vcpkg/get_started/get-started?pivots=shell-powershell
+<https://learn.microsoft.com/en-us/vcpkg/get_started/get-started?pivots=shell-powershell>
 
 ### Configure vcpkg
 
 Set default host triplet to MinGW as follows:
 
-https://learn.microsoft.com/en-us/vcpkg/users/config-environment#vcpkg_default_host_triplet
+<https://learn.microsoft.com/en-us/vcpkg/users/config-environment#vcpkg_default_host_triplet>
 
 Then check value:
 
