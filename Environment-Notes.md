@@ -1,6 +1,7 @@
 # Environment notes
 
 ## For MacOS
+
 OS: MacOS Sonoma 14.6.1 (23G93)
 
 ```sh
@@ -32,13 +33,13 @@ brew install clang-format cppcheck make vcpkg
 
 Required components:
 
-* NuGet
-* Redistributable update for C++ 2022
-* CMake tools for C++ in Windows
-* AddressSanitizer for C++
-* vcpkg
-* Windows 10 SDK
-* Git for windows
+- NuGet
+- Redistributable update for C++ 2022
+- CMake tools for C++ in Windows
+- AddressSanitizer for C++
+- vcpkg
+- Windows 10 SDK
+- Git for windows
 
 ## IDE: VSCode Notes
 
