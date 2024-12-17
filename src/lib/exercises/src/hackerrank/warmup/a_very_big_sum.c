@@ -4,8 +4,8 @@
  * @link Problem definition [[docs/hackerrank/warmup/a_very_big_sum.md]]
  */
 
-long HACKERRANK_WARMUP_aVeryBigSum(int ar_count, const long *ar) {
-  long total = 0;
+long long HACKERRANK_WARMUP_aVeryBigSum(int ar_count, const long *ar) {
+  long long total = 0;
 
   for (int i = 0; i < ar_count; i++) {
     total += ar[i];

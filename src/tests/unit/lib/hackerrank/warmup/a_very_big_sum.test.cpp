@@ -26,7 +26,7 @@ TEST_CASE("aVeryBigSum JSON Test Cases",
     std::vector<long> input_vector = testcase["input"];
     const long *input_array = input_vector.data();
 
-    long result = HACKERRANK_WARMUP_aVeryBigSum(size, input_array);
+    long long result = HACKERRANK_WARMUP_aVeryBigSum(size, input_array);
     CHECK(result == testcase["expected"]);
   }
 }
