@@ -1,5 +1,5 @@
 ---
-name: C/C++ CMake/MSVC Windows CI Test
+name: C/C++ CMake/GNU Linux CI Test
 
 on: # yamllint disable-line rule:truthy
   push:
@@ -14,12 +14,7 @@ jobs:
     name: C/C++ CMake CI Test
     strategy:
       matrix:
-        os: ["windows-2022"]
-        arch:
-          - amd64
-          - amd64_x86
-          # - amd64_arm64
-
+        os: ["ubuntu-24.04"]
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -50,29 +45,14 @@ jobs:
           vcpkg --version
           echo "-----------"
 
-      - uses: ilammy/msvc-dev-cmd@v1
-        with:
-          arch: ${{ matrix.arch }}
-
       - name: Install dependencies
         run: |
-          vcpkg --x-wait-for-lock integrate install
-          vcpkg --x-wait-for-lock install
-
-      - name: Pre Build
-        run: >
-          cmake.exe
-          -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
-          -DCMAKE_BUILD_TYPE=Debug
-          -DCMAKE_C_COMPILER=cl
-          -DCMAKE_CXX_COMPILER=cl
-          -S${{ github.workspace }}
-          -B${{ github.workspace }}/build/default -G "MinGW Makefiles"
+          make dependencies
 
       - name: Build
         run: |
-          cmake --build build/default
+          make build
 
       - name: Test
-        run: >
-          ctest --test-dir ${{ github.workspace }}/build/default
+        run: |
+          make test
