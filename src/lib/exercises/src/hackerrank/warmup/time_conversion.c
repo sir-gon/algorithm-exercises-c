@@ -51,7 +51,6 @@ char *HACKERRANK_WARMUP_lastN(const char *s, unsigned long n) {
 }
 
 char *HACKERRANK_WARMUP_timeConversion(const char *s) {
-  char *conversion;
   char *meridian = HACKERRANK_WARMUP_lastN(s, 2);
 
   char *hour_str = HACKERRANK_WARMUP_firstN(s, 2);
@@ -62,8 +61,12 @@ char *HACKERRANK_WARMUP_timeConversion(const char *s) {
     return NULL;
   }
   strcpy(time_str, s);
-  time_str = HACKERRANK_WARMUP_lastN(time_str, strlen(time_str) - 2);
-  time_str = HACKERRANK_WARMUP_firstN(time_str, strlen(time_str) - 2);
+  char *temp_time_str = HACKERRANK_WARMUP_lastN(time_str, strlen(time_str) - 2);
+  free(time_str);
+  time_str = temp_time_str;
+  temp_time_str = HACKERRANK_WARMUP_firstN(time_str, strlen(time_str) - 2);
+  free(time_str);
+  time_str = temp_time_str;
 
   char *endptr;
   long hour = strtol(hour_str, &endptr, 10);
@@ -88,7 +91,7 @@ char *HACKERRANK_WARMUP_timeConversion(const char *s) {
 
   const int BUFFER_MAX_SIZE = 9;
 
-  conversion = malloc(BUFFER_MAX_SIZE * sizeof(char));
+  char *conversion = malloc(BUFFER_MAX_SIZE * sizeof(char));
 
   snprintf(conversion, BUFFER_MAX_SIZE, "%02ld%s", hour, time_str);
   free(hour_str);

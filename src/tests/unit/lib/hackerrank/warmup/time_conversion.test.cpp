@@ -21,9 +21,14 @@ TEST_CASE("time_conversion JSON Test Cases",
   json data = json::parse(f);
 
   for (auto testcase : data) {
-    std::string result_str(HACKERRANK_WARMUP_timeConversion(
-        testcase["input"].get<std::string>().c_str()));
-    CHECK(result_str == testcase["expected"]);
+    char *result = HACKERRANK_WARMUP_timeConversion(
+        testcase["input"].get<std::string>().c_str());
+
+    std::string result_as_string(result);
+
+    free(result);
+
+    CHECK(result_as_string == testcase["expected"]);
   }
 }
 
