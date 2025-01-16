@@ -32,11 +32,10 @@ TEST_CASE("time_conversion JSON Test Cases",
   }
 }
 
-TEST_CASE("time_conversion helper functions edge cases",
-          "[hackerrank] [helper] [warmup]") {
-  CHECK(HACKERRANK_WARMUP_firstN("", 10) == nullptr);
-  CHECK(HACKERRANK_WARMUP_lastN("", 10) == nullptr);
+TEST_CASE("time_conversion edge cases", "[hackerrank] [helper] [warmup]") {
+  CHECK(HACKERRANK_WARMUP_timeConversion(nullptr) == nullptr);
 
-  CHECK(HACKERRANK_WARMUP_firstN("", 0) == nullptr);
-  CHECK(HACKERRANK_WARMUP_lastN("", 0) == nullptr);
+  CHECK(HACKERRANK_WARMUP_timeConversion("") == nullptr);
+
+  CHECK(HACKERRANK_WARMUP_timeConversion("aa:bb:ccXM") == nullptr);
 }

@@ -4,69 +4,35 @@
  * @link Problem definition [[docs/hackerrank/warmup/time_conversion.md]]
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <stdio.h>  // snprintf
+#include <stdlib.h> // malloc, free, strtol
+#include <string.h> // strcmp, strnlen
 
-char *HACKERRANK_WARMUP_firstN(const char *s, unsigned long n) {
-  unsigned long len = strlen(s);
-  if (n > len) {
-    return NULL;
-  }
-  if (n == 0) {
-    return NULL;
-  }
-
-  char *result = (char *)malloc((n + 1) * sizeof(char));
-  if (result == NULL) {
-    return NULL;
-  }
-
-  strncpy(result, s, n);
-
-  result[n] = '\0';
-
-  return result;
-}
-
-char *HACKERRANK_WARMUP_lastN(const char *s, unsigned long n) {
-  unsigned long len = strlen(s);
-  if (n > len) {
-    return NULL;
-  }
-  if (n == 0) {
-    return NULL;
-  }
-
-  char *result = (char *)malloc((n + 1) * sizeof(char));
-  if (result == NULL) {
-    return NULL;
-  }
-
-  strncpy(result, s + len - n, n);
-
-  result[n] = '\0';
-
-  return result;
-}
+#define HACKERRANK_WARMUP_LONG_TIME_FORMAT_SIZE 10
+#define HACKERRANK_WARMUP_SHORT_TIME_FORMAT_SIZE 8
+#define HACKERRANK_WARMUP_HOUR_FORMAT_SIZE 2
 
 char *HACKERRANK_WARMUP_timeConversion(const char *s) {
-  char *meridian = HACKERRANK_WARMUP_lastN(s, 2);
-
-  char *hour_str = HACKERRANK_WARMUP_firstN(s, 2);
-  char *time_str = (char *)malloc((strlen(s) + 1) * sizeof(char));
-  if (time_str == NULL) {
-    free(hour_str);
-    free(meridian);
+  if (s == NULL) {
     return NULL;
   }
-  strcpy(time_str, s);
-  char *temp_time_str = HACKERRANK_WARMUP_lastN(time_str, strlen(time_str) - 2);
-  free(time_str);
-  time_str = temp_time_str;
-  temp_time_str = HACKERRANK_WARMUP_firstN(time_str, strlen(time_str) - 2);
-  free(time_str);
-  time_str = temp_time_str;
+
+  size_t s_len = strnlen(s, HACKERRANK_WARMUP_LONG_TIME_FORMAT_SIZE);
+
+  if (s_len != HACKERRANK_WARMUP_LONG_TIME_FORMAT_SIZE) {
+    return NULL;
+  }
+
+  char hour_str[HACKERRANK_WARMUP_HOUR_FORMAT_SIZE + 1];
+
+  hour_str[0] = s[0];
+  hour_str[1] = s[1];
+  hour_str[2] = '\0';
+
+  char meridian[3];
+  meridian[0] = s[s_len - 2];
+  meridian[1] = s[s_len - 1];
+  meridian[2] = '\0';
 
   char *endptr;
   long hour = strtol(hour_str, &endptr, 10);
@@ -74,10 +40,6 @@ char *HACKERRANK_WARMUP_timeConversion(const char *s) {
   if (*endptr != '\0') {
     printf("Conversion error, non-convertible part: %s\n", endptr);
 
-    free(hour_str);
-    free(meridian);
-    free(time_str);
-    free(endptr);
     return NULL;
   } else {
     printf("The integer value is: %ld\n", hour);
@@ -89,14 +51,18 @@ char *HACKERRANK_WARMUP_timeConversion(const char *s) {
     hour += 12;
   }
 
-  const int BUFFER_MAX_SIZE = 9;
+  char *conversion =
+      malloc((HACKERRANK_WARMUP_SHORT_TIME_FORMAT_SIZE + 1) * sizeof(char));
 
-  char *conversion = malloc(BUFFER_MAX_SIZE * sizeof(char));
+  for (int i = 0; i < HACKERRANK_WARMUP_SHORT_TIME_FORMAT_SIZE; i++) {
+    conversion[i] = s[i];
+  }
+  conversion[HACKERRANK_WARMUP_SHORT_TIME_FORMAT_SIZE] = '\0';
 
-  snprintf(conversion, BUFFER_MAX_SIZE, "%02ld%s", hour, time_str);
-  free(hour_str);
-  free(meridian);
-  free(time_str);
+  snprintf(hour_str, HACKERRANK_WARMUP_HOUR_FORMAT_SIZE + 1, "%02ld", hour);
+
+  conversion[0] = hour_str[0];
+  conversion[1] = hour_str[1];
 
   return conversion;
 }
