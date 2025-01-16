@@ -64,5 +64,7 @@ char *HACKERRANK_WARMUP_timeConversion(const char *s) {
   conversion[0] = hour_str[0];
   conversion[1] = hour_str[1];
 
+  printf("%s\n", conversion);
+
   return conversion;
 }
