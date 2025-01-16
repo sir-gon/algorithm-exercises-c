@@ -1,4 +1,7 @@
 [
   { "input": "12:01:00PM", "expected": "12:01:00" },
-  { "input": "12:01:00AM", "expected": "00:01:00" }
+  { "input": "12:01:00AM", "expected": "00:01:00" },
+  { "input": "07:05:45PM", "expected": "19:05:45" },
+  { "input": "12:40:22AM", "expected": "00:40:22" },
+  { "input": "12:45:54PM", "expected": "12:45:54" }
 ]
