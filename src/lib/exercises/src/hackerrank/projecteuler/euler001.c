@@ -28,7 +28,9 @@ unsigned long HACKERRANK_PROJECTEULER_gcd(unsigned long a, unsigned long b) {
 }
 
 // Function to find sum of Arithmetic Progression series
-unsigned long HACKERRANK_PROJECTEULER_sum_of_arithmetic_progression(unsigned long n, unsigned long d) {
+unsigned long
+HACKERRANK_PROJECTEULER_sum_of_arithmetic_progression(unsigned long n,
+                                                      unsigned long d) {
   // Number of terms
   n = n / d;
   return n * (1 + n) * d / 2;
