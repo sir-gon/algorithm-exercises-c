@@ -72,7 +72,8 @@ ADD https://apt.llvm.org/llvm-snapshot.gpg.key llvm-snapshot.gpg.key
 RUN apt-key add llvm-snapshot.gpg.key && \
   apt-add-repository "deb https://apt.llvm.org/jammy/ llvm-toolchain-jammy main" && \
   apt-get -y update && \
-  apt-get -y install --no-install-recommends --no-install-suggests clang-format && \
+  apt-get -y install --no-install-recommends --no-install-suggests clang-format-19 && \
+  update-alternatives --install /usr/bin/clang-format clang-format $(which clang-format-19) 100 && \
   rm -rf /var/lib/apt/lists/*
 
 ADD https://deb.nodesource.com/setup_22.x nodesource_setup.sh
