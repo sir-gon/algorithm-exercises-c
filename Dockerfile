@@ -1,4 +1,5 @@
-FROM ubuntu:noble-20250415.1 AS init
+ARG BASE_IMAGE_VERSION=ubuntu:noble-20250404
+FROM ${BASE_IMAGE_VERSION} AS init
 
 ENV WORKDIR=/app
 WORKDIR ${WORKDIR}
@@ -113,7 +114,7 @@ COPY --from=builder ${WORKDIR}/build ${WORKDIR}/
 
 CMD ["make", "test"]
 
-FROM ubuntu:noble-20250415.1 AS production
+FROM ${BASE_IMAGE_VERSION} AS production
 
 ENV LOG_LEVEL=INFO
 ENV BRUTEFORCE=false
