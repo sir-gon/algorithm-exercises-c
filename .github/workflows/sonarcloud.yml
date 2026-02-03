@@ -16,7 +16,7 @@ jobs:
       # Directory where build-wrapper output will be placed
       BUILD_WRAPPER_OUT_DIR: build
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           # Shallow clones should be disabled for a better relevancy of analysis
           fetch-depth: 0
@@ -47,7 +47,6 @@ jobs:
           export VCPKG_ROOT=/usr/local/share/vcpkg
           build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} make build
       # yamllint enable rule:line-length
-
       - name: Run tests to generate coverage statistics
         run: |
           make coverage
