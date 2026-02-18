@@ -23,9 +23,6 @@ RUN apt-get update \
   && gcc --version \
   && g++ --version
 
-
-ENV VCPKG_FORCE_SYSTEM_BINARIES=1
-
 # vcpkg Package Manager
 ENV VCPKG_FORCE_SYSTEM_BINARIES=1
 ENV VCPKG_VERSION=2025.07.25
