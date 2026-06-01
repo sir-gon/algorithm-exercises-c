@@ -10,9 +10,16 @@
 char **HACKERRANK_WARMUP_staircaseCalculate(int n) {
 
   char **answer = malloc(n * sizeof(char *)); // Array of char pointers
+  if (answer == NULL) {
+    return NULL;
+  }
 
   for (int i = 0; i < n; i++) {
     char *line = malloc((n + 1) * sizeof(char)); // Array of char values
+    if (line == NULL) {
+      HACKERRANK_WARMUP_freeStaircase(answer, i);
+      return NULL;
+    }
 
     for (int j = 0; j < n; j++) {
       if (j < n - i - 1) {

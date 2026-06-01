@@ -11,6 +11,9 @@ const int BUFFER_MAX_SIZE = 10;
 
 char *format_result(double number) {
   char *buffer = malloc(BUFFER_MAX_SIZE * sizeof(char));
+  if (buffer == NULL) {
+    return NULL;
+  }
 
   snprintf(buffer, BUFFER_MAX_SIZE, "%0.6lf", number);
   return buffer;
@@ -45,9 +48,16 @@ char **HACKERRANK_WARMUP_plusMinusCalculate(int arr_count, const int *arr) {
 
   int n = 3; // Número de strings (puede ser arbitrario)
   char **answer = malloc(n * sizeof(char *)); // Array de punteros
+  if (answer == NULL) {
+    return NULL;
+  }
 
   for (i = 0; i < n; i++) {
     char *formatted = format_result(results[i]);
+    if (formatted == NULL) {
+      HACKERRANK_WARMUP_freePlusMinus(answer, i);
+      return NULL;
+    }
     answer[i] = formatted;
   }
 
