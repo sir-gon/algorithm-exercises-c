@@ -45,6 +45,9 @@ void HACKERRANK_WARMUP_freeStaircase(char **staircase, int n) {
 
 void HACKERRANK_WARMUP_staircase(int n) {
   char **output = HACKERRANK_WARMUP_staircaseCalculate(n);
+  if (output == NULL) {
+    return;
+  }
 
   for (int i = 0; i < n; i++) {
     printf("%s\n", output[i]);

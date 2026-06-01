@@ -73,6 +73,9 @@ void HACKERRANK_WARMUP_freePlusMinus(char **plusMinusAnswer, int n) {
 
 void HACKERRANK_WARMUP_plusMinus(int arr_count, const int *arr) {
   char **output = HACKERRANK_WARMUP_plusMinusCalculate(arr_count, arr);
+  if (output == NULL) {
+    return;
+  }
 
   for (int i = 0; i < HACKERRANK_WARMUP_PLUSMINUS_LIMIT_ANSWERS; i++) {
     printf("%s", output[i]);

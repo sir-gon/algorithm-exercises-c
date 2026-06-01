@@ -37,6 +37,10 @@ char *HACKERRANK_WARMUP_miniMaxSumCalculate(int arr_count, const int *arr) {
 
 void HACKERRANK_WARMUP_miniMaxSum(int arr_count, const int *arr) {
   char *result = HACKERRANK_WARMUP_miniMaxSumCalculate(arr_count, arr);
+  if (result == NULL) {
+    return;
+  }
+
   printf("%s\n", result);
   free(result);
 }
