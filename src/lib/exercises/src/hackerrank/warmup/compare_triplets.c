@@ -12,6 +12,9 @@ int *HACKERRANK_WARMUP_compareTriplets(int a_count, const int *a, int b_count,
 
   *result_count = 2;
   int *awards = malloc(sizeof(int) * *result_count);
+  if (awards == NULL) {
+    return NULL;
+  }
 
   awards[0] = 0;
   awards[1] = 0;

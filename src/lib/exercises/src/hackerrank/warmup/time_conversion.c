@@ -54,6 +54,10 @@ char *HACKERRANK_WARMUP_timeConversion(const char *s) {
   char *conversion =
       malloc((HACKERRANK_WARMUP_SHORT_TIME_FORMAT_SIZE + 1) * sizeof(char));
 
+  if (conversion == NULL) {
+    return NULL;
+  }
+
   for (int i = 0; i < HACKERRANK_WARMUP_SHORT_TIME_FORMAT_SIZE; i++) {
     conversion[i] = s[i];
   }
