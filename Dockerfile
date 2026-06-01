@@ -73,11 +73,11 @@ RUN apt-get update && \
 RUN mkdir -p /etc/apt/keyrings && \
   curl -fsSL https://apt.llvm.org/llvm-snapshot.gpg.key \
   | gpg --dearmor -o /etc/apt/keyrings/llvm-snapshot.gpg && \
-  echo "deb [signed-by=/etc/apt/keyrings/llvm-snapshot.gpg] http://apt.llvm.org/resolute/ llvm-toolchain-resolute main" \
+  echo "deb [signed-by=/etc/apt/keyrings/llvm-snapshot.gpg] http://apt.llvm.org/resolute/ llvm-toolchain-resolute-22 main" \
   | tee /etc/apt/sources.list.d/llvm.list && \
   apt-get -y update && \
-  apt-get -y install --no-install-recommends --no-install-suggests clang-format-19 && \
-  update-alternatives --install /usr/bin/clang-format clang-format $(which clang-format-19) 100 && \
+  apt-get -y install --no-install-recommends --no-install-suggests clang-format-22 && \
+  update-alternatives --install /usr/bin/clang-format clang-format $(which clang-format-22) 100 && \
   rm -rf /var/lib/apt/lists/*
 
 ADD https://deb.nodesource.com/setup_22.x nodesource_setup.sh
