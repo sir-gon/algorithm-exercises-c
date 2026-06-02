@@ -20,7 +20,7 @@ jobs:
 
       - name: Install Tools
         run: |
-          sudo apt update
+          sudo apt-get update
           sudo apt-get install lcov
 
       - name: Check Tools
@@ -34,17 +34,18 @@ jobs:
         run: |
           make dependencies
 
-      # yamllint disable rule:line-length
       - name: Build
         run: |
           export VCPKG_ROOT=/usr/local/share/vcpkg
           make build
-      # yamllint enable rule:line-length
+
       - name: Test / Coverage
         run: make coverage
 
+      # yamllint disable rule:line-length
       - name: Upload coverage reports to Codecov with GitHub Action
-        uses: codecov/codecov-action@v6
+        uses: codecov/codecov-action@e79a6962e0d4c0c17b229090214935d2e33f8354 # v6.0.1
+        # yamllint enable rule:line-length
         with:
           directory: ./coverage
           files: coverage/lcov.info
