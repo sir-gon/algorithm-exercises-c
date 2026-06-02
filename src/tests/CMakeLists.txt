@@ -1,6 +1,10 @@
 find_package(Catch2 3 REQUIRED)
 find_path(CATCH_INCLUDE_DIR NAMES catch.hpp PATH_SUFFIXES catch2)
 
+# # Create a static library for the memory injector utility
+file(GLOB_RECURSE TOOLS_SOURCES "tools/*.cpp")
+add_library(memory_injector STATIC ${TOOLS_SOURCES})
+
 file(GLOB_RECURSE SOURCES "unit/lib/*.cpp")
 add_executable(unit-tests_combined ${SOURCES})
 
@@ -11,6 +15,11 @@ target_link_libraries(unit-tests_combined PRIVATE Catch2::Catch2WithMain)
 
 # Functionality to test.
 target_link_libraries(unit-tests_combined PRIVATE exercises)
+
+target_link_libraries(unit-tests_combined PRIVATE memory_injector)
+
+# Enforce the wrap linker option on any target linking this library
+target_link_options(memory_injector INTERFACE "-Wl,--wrap=malloc")
 
 list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
 include(CTest)
