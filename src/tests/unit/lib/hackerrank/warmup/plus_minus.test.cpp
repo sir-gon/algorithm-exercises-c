@@ -1,6 +1,5 @@
 #include <catch2/catch_test_macros.hpp>
 
-#include "../../../../tools/memory_injector.hpp"
 #include <exercises/hackerrank/warmup/plus_minus.h>
 #include <iostream>
 #include <stdexcept>
@@ -12,53 +11,34 @@
 using json = nlohmann::json;
 
 TEST_CASE("plusMinus JSON Test Cases", "[hackerrank] [jsontestcase] [warmup]") {
+  std::filesystem::path cwd = std::filesystem::current_path();
+  std::string path =
+      cwd.string() + "/unit/lib/hackerrank/warmup/plus_minus.testcases.json";
 
-  // SECTION("Failure handling during Out of Memory (OOM)") {
-  //   MemoryInjector::enable_oom_fault();
+  INFO("plusMinus JSON test cases FILE: " << path);
 
-  //   int input_size = 3;
-  //   int input_array[] = {1, -2, 0};
+  std::ifstream f(path);
+  json data = json::parse(f);
 
-  //   REQUIRE(HACKERRANK_WARMUP_plusMinusCalculate(input_size, input_array) ==
-  //           nullptr);
+  for (auto testcase : data) {
+    auto input_size = static_cast<int>(testcase["input"].size());
+    std::vector<int> input_vector = testcase["input"];
+    const int *input_array = input_vector.data();
 
-  //   // Clean up the state after finishing the test section
-  //   MemoryInjector::disable_fault();
-  // }
+    char **result =
+        HACKERRANK_WARMUP_plusMinusCalculate(input_size, input_array);
 
-  SECTION("Normal memory allocation succeeds") {
-    // Reset the injector state before every section running
-    // MemoryInjector::disable_fault();
+    std::vector<std::string> result_as_vector;
 
-    std::filesystem::path cwd = std::filesystem::current_path();
-    std::string path =
-        cwd.string() + "/unit/lib/hackerrank/warmup/plus_minus.testcases.json";
-
-    INFO("plusMinus JSON test cases FILE: " << path);
-
-    std::ifstream f(path);
-    json data = json::parse(f);
-
-    for (auto testcase : data) {
-      auto input_size = static_cast<int>(testcase["input"].size());
-      std::vector<int> input_vector = testcase["input"];
-      const int *input_array = input_vector.data();
-
-      char **result =
-          HACKERRANK_WARMUP_plusMinusCalculate(input_size, input_array);
-
-      std::vector<std::string> result_as_vector;
-
-      for (int i = 0; i < HACKERRANK_WARMUP_PLUSMINUS_LIMIT_ANSWERS; i++) {
-        result_as_vector.emplace_back(result[i]);
-      }
-      HACKERRANK_WARMUP_freePlusMinus(
-          result, HACKERRANK_WARMUP_PLUSMINUS_LIMIT_ANSWERS);
-
-      CHECK(result_as_vector == testcase["expected"]);
-
-      // Just call void function, to collect coverage
-      HACKERRANK_WARMUP_plusMinus(input_size, input_array);
+    for (int i = 0; i < HACKERRANK_WARMUP_PLUSMINUS_LIMIT_ANSWERS; i++) {
+      result_as_vector.emplace_back(result[i]);
+      free(result[i]);
     }
+    free(result);
+
+    CHECK(result_as_vector == testcase["expected"]);
+
+    // Just call void function, to collect coverage
+    HACKERRANK_WARMUP_plusMinus(input_size, input_array);
   }
 }
