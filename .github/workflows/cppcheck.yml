@@ -1,5 +1,4 @@
 ---
-
 name: CppCheck Lint
 
 on: # yamllint disable-line rule:truthy
@@ -21,7 +20,7 @@ jobs:
 
       - name: Install tools
         run: |
-          sudo snap install cppcheck
+          sudo snap install cppcheck --edge
 
       - name: Check Tools
         run: |
