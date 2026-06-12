@@ -11,3 +11,5 @@ coverage
 
 # cppcheck output
 cppcheck-report.txt
+
+.cache/*

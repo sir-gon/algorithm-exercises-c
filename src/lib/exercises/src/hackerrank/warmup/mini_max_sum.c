@@ -27,6 +27,9 @@ char *HACKERRANK_WARMUP_miniMaxSumCalculate(int arr_count, const int *arr) {
 
   const int BUFFER_MAX_SIZE = 100;
   char *buffer = malloc(BUFFER_MAX_SIZE * sizeof(char));
+  if (buffer == NULL) {
+    return NULL;
+  }
 
   snprintf(buffer, BUFFER_MAX_SIZE, "%lld %lld", tsum - tmax, tsum - tmin);
   return buffer;
@@ -34,6 +37,10 @@ char *HACKERRANK_WARMUP_miniMaxSumCalculate(int arr_count, const int *arr) {
 
 void HACKERRANK_WARMUP_miniMaxSum(int arr_count, const int *arr) {
   char *result = HACKERRANK_WARMUP_miniMaxSumCalculate(arr_count, arr);
+  if (result == NULL) {
+    return;
+  }
+
   printf("%s\n", result);
   free(result);
 }
