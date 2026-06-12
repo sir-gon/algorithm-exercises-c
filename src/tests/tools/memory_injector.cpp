@@ -7,17 +7,20 @@ static int allocation_counter = 0;
 static int target_fault_allocation = -1;
 
 namespace MemoryInjector {
+// cppcheck-suppress unusedFunction
 void enable_oom_fault() {
   force_immediate_error = true;
   target_fault_allocation = -1;
 }
 
+// cppcheck-suppress unusedFunction
 void disable_fault() {
   force_immediate_error = false;
   allocation_counter = 0;
   target_fault_allocation = -1;
 }
 
+// cppcheck-suppress unusedFunction
 void fail_on_allocation_number(int n) {
   force_immediate_error = false;
   allocation_counter = 0;
