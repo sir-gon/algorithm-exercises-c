@@ -18,8 +18,11 @@ target_link_libraries(unit-tests_combined PRIVATE exercises)
 
 target_link_libraries(unit-tests_combined PRIVATE memory_injector)
 
-# Enforce the wrap linker option on any target linking this library
-target_link_options(memory_injector INTERFACE "-Wl,--wrap=malloc")
+# GNU ld (Linux) needs --wrap=malloc to redirect calls to __wrap_malloc.
+# macOS uses dyld interposition instead, which requires no linker flag.
+if(NOT APPLE)
+  target_link_options(memory_injector INTERFACE "-Wl,--wrap=malloc")
+endif()
 
 list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
 include(CTest)
