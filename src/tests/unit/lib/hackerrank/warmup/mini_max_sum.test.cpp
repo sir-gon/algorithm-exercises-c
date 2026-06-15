@@ -1,15 +1,18 @@
+// 3rd party libs
 #include <catch2/catch_test_macros.hpp>
-
-#include "../../../../tools/memory_injector.hpp"
-#include <exercises/hackerrank/warmup/mini_max_sum.h>
-#include <string>
-#include <vector>
-
-#include <filesystem>
-#include <fstream>
 #include <nlohmann/json.hpp>
 
-#include <stdio.h> // malloc
+// local libs
+#ifdef __linux__
+#include "../../../../tools/memory_injector.hpp"
+#endif
+#include <exercises/hackerrank/warmup/mini_max_sum.h>
+
+// std libs
+#include <filesystem>
+#include <fstream>
+#include <string>
+#include <vector>
 
 using json = nlohmann::json;
 

@@ -1,13 +1,18 @@
+// 3rd party libs
 #include <catch2/catch_test_macros.hpp>
+#include <nlohmann/json.hpp>
 
+// local libs
+#ifdef __linux__
 #include "../../../../tools/memory_injector.hpp"
+#endif
 #include <exercises/hackerrank/warmup/plus_minus.h>
 
-#include <vector>
-
+// std libs
 #include <filesystem>
 #include <fstream>
-#include <nlohmann/json.hpp>
+#include <vector>
+
 using json = nlohmann::json;
 
 TEST_CASE("plusMinus JSON Test Cases", "[hackerrank] [jsontestcase] [warmup]") {

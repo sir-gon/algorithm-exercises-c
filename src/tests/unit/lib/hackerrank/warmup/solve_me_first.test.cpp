@@ -1,10 +1,13 @@
+// 3rd party libs
 #include <catch2/catch_test_macros.hpp>
+#include <nlohmann/json.hpp>
 
+// local libs
 #include <exercises/hackerrank/warmup/solve_me_first.h>
+
+// std libs
 #include <filesystem>
 #include <fstream>
-#include <nlohmann/json.hpp>
-#include <vector>
 
 using json = nlohmann::json;
 

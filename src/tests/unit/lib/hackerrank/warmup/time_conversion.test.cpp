@@ -1,10 +1,16 @@
+// 3rd party libs
 #include <catch2/catch_test_macros.hpp>
+#include <nlohmann/json.hpp>
 
+// local libs
+#ifdef __linux__
 #include "../../../../tools/memory_injector.hpp"
+#endif
 #include <exercises/hackerrank/warmup/time_conversion.h>
+
+// std libs
 #include <filesystem>
 #include <fstream>
-#include <nlohmann/json.hpp>
 
 using json = nlohmann::json;
 
