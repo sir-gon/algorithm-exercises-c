@@ -14,7 +14,9 @@ jobs:
     name: C/C++ CMake CI Test
     strategy:
       matrix:
-        os: ["windows-2022", "windows-2025"]
+        os:
+          - "windows-2022"
+          - "windows-2025"
         arch:
           - amd64
           - amd64_x86
