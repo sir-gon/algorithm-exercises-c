@@ -12,7 +12,7 @@ on: # yamllint disable-line rule:truthy
 jobs:
   coverage:
     name: C/C++ CMake CI Coverage
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout repository

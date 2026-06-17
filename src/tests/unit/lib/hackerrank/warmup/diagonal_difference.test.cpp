@@ -1,12 +1,14 @@
+// 3rd party libs
 #include <catch2/catch_test_macros.hpp>
+#include <nlohmann/json.hpp>
 
+// local libs
 #include <exercises/hackerrank/warmup/diagonal_difference.h>
-#include <iostream>
-#include <vector>
 
+// std libs
 #include <filesystem>
 #include <fstream>
-#include <nlohmann/json.hpp>
+
 using json = nlohmann::json;
 
 int **jsonToMatrix(const nlohmann::json &matrixJson, int &rows, int &cols) {

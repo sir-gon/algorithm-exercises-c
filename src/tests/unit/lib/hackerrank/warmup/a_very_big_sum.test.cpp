@@ -1,12 +1,15 @@
+// 3rd party libs
 #include <catch2/catch_test_macros.hpp>
+#include <nlohmann/json.hpp>
 
+// local libs
 #include <exercises/hackerrank/warmup/a_very_big_sum.h>
-#include <iostream>
-#include <vector>
 
+// std libs
 #include <filesystem>
 #include <fstream>
-#include <nlohmann/json.hpp>
+#include <vector>
+
 using json = nlohmann::json;
 
 TEST_CASE("aVeryBigSum JSON Test Cases",
