@@ -30,9 +30,15 @@ jobs:
 
       - name: Check Tools
         run: |
+          echo "-----------"
+          gcc --version
+          echo "-----------"
           make --version
+          echo "-----------"
           cmake --version
+          echo "-----------"
           vcpkg --version
+          echo "-----------"
           lcov --version
 
       - name: Install dependencies
