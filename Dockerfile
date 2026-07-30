@@ -25,7 +25,7 @@ RUN apt-get update \
 
 # vcpkg Package Manager
 ENV VCPKG_FORCE_SYSTEM_BINARIES=1
-ENV VCPKG_VERSION=2025.07.25
+ENV VCPKG_VERSION=2026.06.24
 ENV VCPKG_ROOT=/opt/vcpkg
 
 # vcpkg Package Manager
