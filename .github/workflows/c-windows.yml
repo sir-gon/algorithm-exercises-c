@@ -17,10 +17,6 @@ jobs:
         os:
           - "windows-2022"
           - "windows-2025"
-        arch:
-          - amd64
-          - amd64_x86
-          # - amd64_arm64
 
     runs-on: ${{ matrix.os }}
 
@@ -36,16 +32,14 @@ jobs:
       - name: Check Tools
         run: |
           echo "-----------"
+          cc --version
+          echo "-----------"
           make --version
           echo "-----------"
           cmake --version
           echo "-----------"
           vcpkg --version
           echo "-----------"
-
-      - uses: ilammy/msvc-dev-cmd@v1
-        with:
-          arch: ${{ matrix.arch }}
 
       - name: Install dependencies
         run: |
