@@ -40,7 +40,7 @@ jobs:
     #   - https://gh.io/using-larger-runners (GitHub.com only)
     # Consider using larger runners or machines with greater resources
     # for possible analysis time improvements.
-    runs-on: ${{ (matrix.language == 'swift' && 'macos-14') || 'ubuntu-24.04' }}
+    runs-on: ${{ (matrix.language == 'swift' && 'macos-14') || 'ubuntu-26.04' }}
     permissions:
       # required for all workflows
       security-events: write
@@ -74,9 +74,15 @@ jobs:
 
       - name: Check Tools
         run: |
+          echo "-----------"
+          cc --version
+          echo "-----------"
           make --version
+          echo "-----------"
           cmake --version
+          echo "-----------"
           vcpkg --version
+          echo "-----------"
 
       - name: Install dependencies
         run: |
