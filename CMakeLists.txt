@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.21)
 
-project(algoritm-exercises-c CXX C ASM)
+project(algorithm-exercises-c CXX C ASM)
 
 # Option to control whether compiler should save intermediate temps (assembly files)
 option(GENERATE_ASM "Generate assembly outputs (*.s) during the build" OFF)
