@@ -110,8 +110,6 @@ jobs:
     runs-on: ubuntu-26.04
     needs: build-lint
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-
       - name: Download artifact
         uses: actions/download-artifact@v8
         with:
@@ -135,8 +133,6 @@ jobs:
     runs-on: ubuntu-26.04
     needs: build-test
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-
       - name: Download artifact
         uses: actions/download-artifact@v8
         with:
@@ -243,6 +239,6 @@ jobs:
           TRIVY_DB_REPOSITORY: ${{ vars.TRIVY_DB_REPOSITORY }}
 
       - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v4
+        uses: github/codeql-action/upload-sarif@v4.37.8
         with:
           sarif_file: "trivy-results.sarif"
