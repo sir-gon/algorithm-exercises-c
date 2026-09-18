@@ -77,6 +77,9 @@ dependencies:
 	vcpkg --x-wait-for-lock integrate install
 	vcpkg --x-wait-for-lock install
 
+lint/json:
+	prettier --check ./src/**/*.json
+
 lint/markdown:
 	markdownlint --config .markdownlint.json '**/*.md' && echo '✔  Your code looks good.'
 
@@ -105,8 +108,13 @@ test/static: prebuild test/static-no-deps
 test/styling:
 	clang-format --dry-run --Werror $(FILES)
 
-format:
+format/sources:
 	clang-format -i --verbose $(FILES)
+
+format/json:
+	prettier --write ./**/*.json
+
+format: format/sources format/json
 
 test: env dependencies build clean/test
 	cd build && make test
@@ -156,6 +164,13 @@ compose/lint/yaml:
     --workdir /workspace \
     -v "$$(pwd):/workspace" \
     yamllint --strict /workspace \
+		&& echo '✔  Your code looks good.'
+
+compose/lint/json:
+	${DOCKER_COMPOSE} --profile lint run --rm \
+    --workdir /workspace \
+    -v "$$(pwd):/workspace" \
+    prettier --check /workspace/**/*.json \
 		&& echo '✔  Your code looks good.'
 
 compose/test/styling: compose/build
