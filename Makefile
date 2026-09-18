@@ -112,7 +112,7 @@ format/sources:
 	clang-format -i --verbose $(FILES)
 
 format/json:
-	prettier --write ./src/**/*.json
+	prettier --write ./**/*.json
 
 format: format/sources format/json
 
@@ -164,6 +164,13 @@ compose/lint/yaml:
     --workdir /workspace \
     -v "$$(pwd):/workspace" \
     yamllint --strict /workspace \
+		&& echo '✔  Your code looks good.'
+
+compose/lint/json:
+	${DOCKER_COMPOSE} --profile lint run --rm \
+    --workdir /workspace \
+    -v "$$(pwd):/workspace" \
+    prettier --check /workspace/**/*.json \
 		&& echo '✔  Your code looks good.'
 
 compose/test/styling: compose/build
