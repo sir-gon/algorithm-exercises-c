@@ -25,6 +25,10 @@ jobs:
         run: |
           npm install -g --ignore-scripts prettier@3.9.8
 
+      - name: Tool check
+        run: |
+          prettier --version
+
       - name: Prettier LINT / Style JSON
         run: >
           prettier --check ./**/*.json
