@@ -89,7 +89,7 @@ lint/yaml:
 lint: test/styling test/static
 lint-no-deps: test/styling test/static-no-deps
 
-lint/all: lint/markdown lint/yaml test/styling test/static
+lint/all: lint/markdown lint/yaml lint/json test/styling test/static
 
 test/static-no-deps:
 	cppcheck \
@@ -112,7 +112,7 @@ format/sources:
 	clang-format -i --verbose $(FILES)
 
 format/json:
-	prettier --write ./**/*.json
+	prettier --write ./src/**/*.json
 
 format: format/sources format/json
 
