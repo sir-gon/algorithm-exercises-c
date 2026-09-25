@@ -153,9 +153,11 @@ jobs:
           path: /tmp/
 
       - name: Load image
-        run:
+        env:
           # yamllint disable-line rule:line-length
-          docker load --input /tmp/${{ env.ARTIFACT_NAME }}_${{ matrix.base_image }}_lint.tar
+          ARTIFACT_FILE: "${{ env.ARTIFACT_NAME }}_${{ matrix.base_image }}_lint.tar"
+        run: |
+          docker load --input /tmp/${{ env.ARTIFACT_FILE }}
           docker image ls -a
 
       - name: Run lint
@@ -184,9 +186,11 @@ jobs:
           path: /tmp/
 
       - name: Load image
-        run:
+        env:
           # yamllint disable-line rule:line-length
-          docker load --input /tmp/${{ env.ARTIFACT_NAME }}_${{ matrix.base_image }}_test.tar
+          ARTIFACT_FILE: "${{ env.ARTIFACT_NAME }}_${{ matrix.base_image }}_test.tar"
+        run: |
+          docker load --input /tmp/${{ env.ARTIFACT_FILE }}
           docker image ls -a
 
       - name: Run test
@@ -257,6 +261,7 @@ jobs:
       actions: read
       contents: read
       security-events: write
+
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v8
@@ -265,9 +270,11 @@ jobs:
           path: /tmp/
 
       - name: Load image
-        run:
+        env:
           # yamllint disable-line rule:line-length
-          docker load --input /tmp/${{ env.ARTIFACT_NAME }}_${{ matrix.base_image }}_prod.tar
+          ARTIFACT_FILE: "${{ env.ARTIFACT_NAME }}_${{ matrix.base_image }}_prod.tar"
+        run: |
+          docker load --input /tmp/${{ env.ARTIFACT_FILE }}
           docker image ls -a
 
       - name: Run Trivy vulnerability scanner (cli report)
