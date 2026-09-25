@@ -27,6 +27,7 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           context: .
+          file: Dockerfile.alpine
           target: lint
           outputs: |
             type=docker,dest=/tmp/${{ env.ARTIFACT_NAME }}_lint.tar
@@ -50,6 +51,7 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           context: .
+          file: Dockerfile.alpine
           target: testing
           outputs: |
             type=docker,dest=/tmp/${{ env.ARTIFACT_NAME }}_test.tar
@@ -73,6 +75,7 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           context: .
+          file: Dockerfile.alpine
           target: production
           outputs: |
             type=docker,dest=/tmp/${{ env.ARTIFACT_NAME }}_prod.tar
