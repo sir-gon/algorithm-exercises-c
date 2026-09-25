@@ -4,66 +4,70 @@ services:
     image: algorithm-exercises-c:test
     build:
       context: .
+      dockerfile: Dockerfile.${BASE_IMAGE:-alpine}
       target: testing
     environment:
       LOG_LEVEL: ${LOG_LEVEL:-info} ## (1) ## info | debug
       BRUTEFORCE: ${BRUTEFORCE:-false} ## (1) ## true | false
     volumes:
       - ./coverage:/app/coverage
-    profiles: ["testing"]
+    profiles: ['testing']
 
   algorithm-exercises-c-lint:
     image: algorithm-exercises-c:lint
     build:
       context: .
+      dockerfile: Dockerfile.${BASE_IMAGE:-alpine}
       target: lint
     volumes:
       - ./.clang-format:/app/.clang-format
       - ./Makefile:/app/Makefile
       - ./src:/app/src
-    profiles: ["lint"]
+    profiles: ['lint']
 
   markdownlint:
     image: goncl/markdownlint-cli:latest
     working_dir: /workspace
     volumes:
       - ./:/workspace
-    profiles: ["lint"]
+    profiles: ['lint']
 
   yamllint:
     image: goncl/yamllint:latest
     working_dir: /workspace
     volumes:
       - ./:/workspace
-    profiles: ["lint"]
+    profiles: ['lint']
 
   prettier:
     image: goncl/prettier:3.9.8
     working_dir: /workspace
     volumes:
       - ./:/workspace
-    profiles: ["lint"]
+    profiles: ['lint']
 
   algorithm-exercises-c-dev:
     image: algorithm-exercises-c:dev
     build:
       context: .
+      dockerfile: Dockerfile.${BASE_IMAGE:-alpine}
       target: development
     environment:
       LOG_LEVEL: ${LOG_LEVEL:-info} ## (1) ## info | debug
       BRUTEFORCE: ${BRUTEFORCE:-false} ## (1) ## true | false
     volumes:
       - ./:/app
-    profiles: ["development"]
+    profiles: ['development']
 
   algorithm-exercises-c:
     image: algorithm-exercises-c:latest
     build:
       context: .
+      dockerfile: Dockerfile.${BASE_IMAGE:-alpine}
       target: production
     # volumes:
     #   - ./:/app
-    profiles: ["production"]
+    profiles: ['production']
 
 ## REFERENCES:
 ## (1) Passing Environment variable with fallback value:
