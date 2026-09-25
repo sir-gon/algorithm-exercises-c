@@ -16,7 +16,7 @@ on: # yamllint disable-line rule:truthy
     # The branches below must be a subset of the branches above
     branches: ["main"]
   schedule:
-    - cron: '33 15 * * 3'
+    - cron: "33 15 * * 3"
 
 permissions:
   contents: read
@@ -41,7 +41,7 @@ jobs:
       - name: Run hadolint
         uses: hadolint/hadolint-action@06be81baf89a55ffd0e24b8f04a4185738dd3387 # v3.5.0
         with:
-          dockerfile: ./Dockerfile
+          dockerfile: ./Dockerfile.ubuntu
           format: sarif
           output-file: hadolint-results.sarif
           no-fail: true
