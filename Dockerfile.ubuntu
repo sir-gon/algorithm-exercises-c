@@ -133,10 +133,10 @@ CMD ["make", "lint-no-deps"]
 FROM init AS testing
 
 RUN apt-get -y update && \
-  apt-get -y install --no-install-recommends --no-install-suggests "lcov=2.4-3" && \
+  apt-get -y install --no-install-recommends --no-install-suggests \
+    "lcov=2.4-3" && \
   rm -rf /var/lib/apt/lists/*
 
-# COPY --from=builder ${WORKDIR}/build ${WORKDIR}/build
 COPY --from=builder ${WORKDIR} ${WORKDIR}
 
 CMD ["make", "test-no-deps"]
@@ -147,6 +147,12 @@ ENV LOG_LEVEL=INFO
 ENV BRUTEFORCE=false
 ENV WORKDIR=/app
 WORKDIR ${WORKDIR}
+
+RUN apt-get update \
+  && apt-get -y install --no-install-recommends --no-install-suggests \
+    ## common permanent packages
+    "make=4.4.1-3" \
+  && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder ${WORKDIR}/build/src/lib/exercises/*.a ${WORKDIR}/
 

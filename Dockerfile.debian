@@ -102,7 +102,7 @@ CMD []
 
 FROM init AS lint
 
-# # Instala sólo lo mínimo necesario para linting (cmake, clang-format, cppcheck)
+# Instala sólo lo mínimo necesario para linting (cmake, clang-format, cppcheck)
 RUN apt-get update && \
   apt-get -y install --no-install-recommends --no-install-suggests \
     "clang-format=1:19.0-63" \
@@ -133,7 +133,7 @@ RUN apt-get -y update && \
     "lcov=2.3.1-1" && \
   rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder ${WORKDIR}/build ${WORKDIR}/build
+COPY --from=builder ${WORKDIR} ${WORKDIR}
 
 CMD ["make", "test-no-deps"]
 
@@ -149,7 +149,7 @@ RUN apt-get update \
     ## common permanent packages
     "make=4.4.1-2" \
   && rm -rf /var/lib/apt/lists/*
-  
+
 COPY --from=builder ${WORKDIR}/build/src/lib/exercises/*.a ${WORKDIR}/
 
 RUN useradd --uid 1001 --user-group --system --create-home --no-log-init app
