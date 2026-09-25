@@ -1,4 +1,4 @@
-FROM ubuntu:26.04 AS init
+FROM alpine:3.24 AS init
 
 ENV WORKDIR=/app
 WORKDIR ${WORKDIR}
@@ -6,52 +6,38 @@ WORKDIR ${WORKDIR}
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Etc/UTC
 
-RUN apt-get update \
-  && apt-get -y install --no-install-recommends --no-install-suggests \
-    ## common permanent packages
-    "make=4.4.1-3" \
-  && rm -rf /var/lib/apt/lists/*
+
+RUN apk add --update --no-cache \
+  ## common permanent packages
+  "make=4.4.1-r4"
 
 COPY ./Makefile ${WORKDIR}/
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-RUN apt-get update \
-  && apt-get -y install --no-install-recommends --no-install-suggests \
-  ## common permanent packages
-    "ca-certificates=20260601~26.04.1" \
-  ## add ephemeral packages
-    "curl=8.18.0-1ubuntu2.7" \
-    "gpg=2.4.8-4ubuntu3.1" \
-  # CMAKE from Kitware repository
-  && curl --proto "=https" -fsSL https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null \
-  | gpg --dearmor -o /usr/share/keyrings/kitware-archive-keyring.gpg \
-  && echo "deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu resolute main" \
-  > /etc/apt/sources.list.d/kitware.list \
-  # CMAKE from Kitware repository
-  && apt-get update \
-  && apt-get -y install --no-install-recommends --no-install-suggests \
-    "cmake=4.4.3-0kitware1ubuntu26.04.1" \
-    "cmake-data=4.4.3-0kitware1ubuntu26.04.1" \
+SHELL ["/bin/ash", "-o", "pipefail", "-c"]
+RUN apk --update add --no-cache \
+    "ca-certificates=20260909-r0" \
+    "tzdata=2026d-r0" \
+    "gcompat=1.1.0-r4" \
+  && update-ca-certificates \
+  && apk --update add --no-cache \
+    ## add ephemeral packages
+    "curl=8.22.0-r0" \
+    "tar=1.35-r5" \
+    # CMAKE from Kitware repository
+    && curl -fsSLH "Cache-Control: no-cache" --proto "=https" https://github.com/Kitware/CMake/releases/download/v4.4.0/cmake-4.4.0-linux-x86_64.tar.gz \
+    | tar -xz --strip-components=1 -C /usr/local \
   ## remove ephemeral packages
-  && apt-get -y autoremove curl gpg \
-  ## clean up
-  && rm -rf /var/lib/apt/lists/*
+  && apk del curl gpg tar
 
 FROM init AS builder
 
 ARG GENERATE_ASM=0
 ENV GENERATE_ASM=${GENERATE_ASM}
 
-# # build tools
-RUN apt-get update \
-  && apt-get -y install --no-install-recommends --no-install-suggests \
-    "build-essential=12.12ubuntu2.26.04.2" \
-    "g++=4:15.2.0-5ubuntu1" \
-    "gcc=4:15.2.0-5ubuntu1" \
-    "pkg-config=2.5.1-4" \
-  ## clean up
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* \
+# build tools
+RUN apk --update add --no-cache \
+  "build-base=0.5-r4" \
+  "pkgconf=2.5.1-r0" \
   ## test tools
   && gcc --version \
   && g++ --version \
@@ -64,15 +50,13 @@ ENV VCPKG_VERSION=2026.07.29
 ENV VCPKG_ROOT=/opt/vcpkg
 
 # vcpkg Package Manager
-RUN apt-get -y update \
-  && apt-get -y install --no-install-recommends --no-install-suggests \
-    "curl=8.18.0-1ubuntu2.7" \
-    "git=1:2.53.0-1ubuntu1" \
-    "ninja-build=1.13.2-1" \
-    "patchelf=0.18.0-1.4build1" \
-    "unzip=6.0-29ubuntu1" \
-    "zip=3.0-15ubuntu3" \
-  && rm -rf /var/lib/apt/lists/* \
+RUN apk --update add --no-cache \
+    "curl=8.22.0-r0" \
+    "git=2.54.0-r0" \
+    "patchelf=0.18.0-r3" \
+    "samurai=1.2-r8" \
+    "unzip=6.0-r16" \
+    "zip=3.0-r13" \
   && mkdir /opt/vcpkg \
   && git clone --branch "${VCPKG_VERSION}" https://github.com/microsoft/vcpkg "${VCPKG_ROOT}" \
   && /opt/vcpkg/bootstrap-vcpkg.sh \
@@ -106,12 +90,10 @@ CMD []
 
 FROM init AS lint
 
-# Instala sólo lo mínimo necesario para linting (cmake, clang-format, cppcheck)
-RUN apt-get update && \
-  apt-get -y install --no-install-recommends --no-install-suggests \
-    "clang-format=1:21.1.6-71" \
-    "cppcheck=2.19.0-3" && \
-  rm -rf /var/lib/apt/lists/*
+# # Instala sólo lo mínimo necesario para linting (cmake, clang-format, cppcheck)
+RUN apk --update add --no-cache \
+  "clang-extra-tools=22.1.3-r2" \
+  "cppcheck=2.21.0-r0"
 
 LABEL lint-phase=enabled
 LABEL clang-format=enabled
@@ -132,16 +114,21 @@ CMD ["make", "lint-no-deps"]
 
 FROM init AS testing
 
-RUN apt-get -y update && \
-  apt-get -y install --no-install-recommends --no-install-suggests "lcov=2.4-3" && \
-  rm -rf /var/lib/apt/lists/*
+RUN apk --update add --no-cache \
+  # libasan required (AdressSanitizer)
+  "gcc=15.2.0-r5" \
+  # coverage
+  "lcov=2.3.1-r1" \
+  # runtime required libraries
+  "libgcc=15.2.0-r5" \
+  "libstdc++=15.2.0-r5"
 
 # COPY --from=builder ${WORKDIR}/build ${WORKDIR}/build
 COPY --from=builder ${WORKDIR} ${WORKDIR}
 
 CMD ["make", "test-no-deps"]
 
-FROM ubuntu:26.04 AS production
+FROM alpine:3.24 AS production
 
 ENV LOG_LEVEL=INFO
 ENV BRUTEFORCE=false
@@ -150,7 +137,8 @@ WORKDIR ${WORKDIR}
 
 COPY --from=builder ${WORKDIR}/build/src/lib/exercises/*.a ${WORKDIR}/
 
-RUN useradd --uid 1001 --user-group --system --create-home --no-log-init app
+RUN addgroup -S -g 1001 app \
+    && adduser -S -u 1001 -G app -h /home/app app
 USER 1001
 
 RUN ls -alhR
