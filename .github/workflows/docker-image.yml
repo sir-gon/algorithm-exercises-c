@@ -14,13 +14,25 @@ env:
   ARTIFACT_NAME: algorithm-exercises-c_${{ github.sha }}
 
 jobs:
+  setup:
+    name: "Setup matrix"
+    runs-on: ubuntu-26.04
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Set base images matrix
+        id: set-matrix
+        run: |
+          echo 'matrix={"base_image":["alpine","debian","ubuntu"]}' \
+            >> "$GITHUB_OUTPUT"
+
   build-lint:
     name: "Build Docker LINT image (${{ matrix.base_image }})"
     runs-on: ubuntu-26.04
+    needs: setup
     strategy:
       fail-fast: false
-      matrix:
-        base_image: [alpine, debian, ubuntu]
+      matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
@@ -47,10 +59,10 @@ jobs:
   build-test:
     name: "Build Docker TEST image (${{ matrix.base_image }})"
     runs-on: ubuntu-26.04
+    needs: setup
     strategy:
       fail-fast: false
-      matrix:
-        base_image: [alpine, debian, ubuntu]
+      matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
@@ -77,10 +89,10 @@ jobs:
   build-prod:
     name: "Build Docker PRODUCTION image (${{ matrix.base_image }})"
     runs-on: ubuntu-26.04
+    needs: setup
     strategy:
       fail-fast: false
-      matrix:
-        base_image: [alpine, debian, ubuntu]
+      matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
@@ -138,11 +150,10 @@ jobs:
   run-lint:
     name: "Run in docker: LINT (${{ matrix.base_image }})"
     runs-on: ubuntu-26.04
-    needs: build-lint
+    needs: [setup, build-lint]
     strategy:
       fail-fast: false
-      matrix:
-        base_image: [alpine, debian, ubuntu]
+      matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
@@ -171,11 +182,10 @@ jobs:
   run-test:
     name: "Run in docker: TEST (${{ matrix.base_image }})"
     runs-on: ubuntu-26.04
-    needs: build-test
+    needs: [setup, build-test]
     strategy:
       fail-fast: false
-      matrix:
-        base_image: [alpine, debian, ubuntu]
+      matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
@@ -252,11 +262,10 @@ jobs:
   scan:
     name: "Trivy (${{ matrix.base_image }})"
     runs-on: ubuntu-26.04
-    needs: build-prod
+    needs: [setup, build-prod]
     strategy:
       fail-fast: false
-      matrix:
-        base_image: [alpine, debian, ubuntu]
+      matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
     permissions:
       actions: read
       contents: read
