@@ -156,7 +156,7 @@ cmake --version
 ```
 
 ```text
-cmake version 3.30.3
+cmake version 4.4.2
 
 CMake suite maintained and supported by Kitware (kitware.com/cmake).
 ```
@@ -168,7 +168,7 @@ vcpkg --version
 ```
 
 ```text
-vcpkg package management program version 2024-08-01-2024.08.01
+vcpkg package management program version 2026-07-27-Homebrew
 
 See LICENSE.txt for license information.
 ```
@@ -176,12 +176,23 @@ See LICENSE.txt for license information.
 ---
 
 ```sh
+gcc --version
+```
+
+```sh
+Apple clang version 17.0.0 (clang-1700.6.4.2)
+Target: x86_64-apple-darwin25.6.0
+Thread model: posix
+InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+```
+
+```sh
 g++ --version
 ```
 
 ```text
-Apple clang version 15.0.0 (clang-1500.3.9.4)
-Target: x86_64-apple-darwin23.6.0
+Apple clang version 17.0.0 (clang-1700.6.4.2)
+Target: x86_64-apple-darwin25.6.0
 Thread model: posix
 InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
 ```
@@ -193,7 +204,17 @@ cppcheck --version
 ```
 
 ```text
-Cppcheck 2.15.0
+Cppcheck 2.21.0
+```
+
+---
+
+```sh
+clang-format --version
+```
+
+```text
+clang-format version 22.1.8
 ```
 
 ## Algorithm excersices sources
