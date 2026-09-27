@@ -13,6 +13,9 @@ env:
   IMAGE_NAME: algorithm-exercises-c
   ARTIFACT_NAME: algorithm-exercises-c_${{ github.sha }}
 
+permissions:
+  contents: read
+
 jobs:
   setup:
     name: "Setup matrix"
