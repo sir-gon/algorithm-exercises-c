@@ -25,9 +25,9 @@ jobs:
           fetch-depth: 0
       - name: Install Tools
         run: |
-          sudo rm /usr/lib/python3.*/EXTERNALLY-MANAGED
           sudo apt-get install lcov
-          pip install gcovr
+          sudo rm /usr/lib/python3.*/EXTERNALLY-MANAGED
+          pip install --only-binary :all: gcovr==8.6
 
       - name: Check Tools
         run: |
