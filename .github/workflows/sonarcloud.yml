@@ -1,6 +1,8 @@
 ---
 name: SonarCloud
 
+# yamllint disable rule:line-length
+
 on: # yamllint disable-line rule:truthy
   push:
     branches: ["main"]
@@ -25,9 +27,9 @@ jobs:
           fetch-depth: 0
       - name: Install Tools
         run: |
-          sudo rm /usr/lib/python3.*/EXTERNALLY-MANAGED
           sudo apt-get install lcov
-          pip install gcovr
+          sudo rm /usr/lib/python3.*/EXTERNALLY-MANAGED
+          pip install --only-binary :all: gcovr==8.6
 
       - name: Check Tools
         run: |
@@ -42,14 +44,12 @@ jobs:
           make dependencies
 
       - name: Install Build Wrapper
-        uses: SonarSource/sonarqube-scan-action/install-build-wrapper@master
+        uses: SonarSource/sonarqube-scan-action/install-build-wrapper@ba9859eae8dd6bd29e412f25ddbbef3d032000f4
 
-      # yamllint disable rule:line-length
       - name: Run build-wrapper
         run: |
           export VCPKG_ROOT=/usr/local/share/vcpkg
           build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} make build
-      # yamllint enable rule:line-length
       - name: Run tests to generate coverage statistics
         run: |
           make coverage
@@ -58,9 +58,8 @@ jobs:
         run: |
           gcovr -e "src/tests/*" --sonarqube > coverage.xml
 
-      # yamllint disable rule:line-length
       - name: Analyze with SonarQube / SonarCloud
-        uses: SonarSource/sonarqube-scan-action@master
+        uses: SonarSource/sonarqube-scan-action@ba9859eae8dd6bd29e412f25ddbbef3d032000f4
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
@@ -68,4 +67,3 @@ jobs:
           args: >
             --define sonar.cfamily.compile-commands=${{ env.BUILD_WRAPPER_OUT_DIR }}/compile_commands.json
             --define sonar.coverageReportPaths=coverage.xml
-      # yamllint enable rule:line-length
