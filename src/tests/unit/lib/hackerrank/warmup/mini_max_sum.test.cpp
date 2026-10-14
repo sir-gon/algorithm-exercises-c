@@ -33,12 +33,10 @@ TEST_CASE("miniMaxSum JSON Test Cases",
 #endif
 
   SECTION("miniMaxSum: Normal memory allocation succeeds") {
-    std::filesystem::path cwd = std::filesystem::current_path();
-    std::string path =
-        cwd.string() +
-        "/unit/lib/hackerrank/warmup/mini_max_sum.testcases.json";
+    std::filesystem::path path = std::filesystem::path(__FILE__).parent_path() /
+                                 "mini_max_sum.testcases.json";
 
-    INFO("miniMaxSum JSON test cases FILE: " << path);
+    INFO("miniMaxSum JSON test cases FILE: " << path.string());
 
     std::ifstream f(path);
     json data = json::parse(f);

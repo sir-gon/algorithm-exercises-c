@@ -40,12 +40,10 @@ TEST_CASE("compareTriplets JSON Test Cases",
 #endif
 
   SECTION("compareTriplets: Normal memory allocation succeeds") {
-    std::filesystem::path cwd = std::filesystem::current_path();
-    std::string path =
-        cwd.string() +
-        "/unit/lib/hackerrank/warmup/compare_triplets.testcases.json";
+    std::filesystem::path path = std::filesystem::path(__FILE__).parent_path() /
+                                 "compare_triplets.testcases.json";
 
-    INFO("compareTriplets JSON test cases FILE: " << path);
+    INFO("compareTriplets JSON test cases FILE: " << path.string());
 
     std::ifstream f(path);
     json data = json::parse(f);

@@ -30,12 +30,10 @@ TEST_CASE("time_conversion JSON Test Cases",
 #endif
 
   SECTION("Normal memory allocation succeeds") {
-    std::filesystem::path cwd = std::filesystem::current_path();
-    std::string path =
-        cwd.string() +
-        "/unit/lib/hackerrank/warmup/time_conversion.testcases.json";
+    std::filesystem::path path = std::filesystem::path(__FILE__).parent_path() /
+                                 "time_conversion.testcases.json";
 
-    INFO("time_conversion JSON test cases FILE: " << path);
+    INFO("time_conversion JSON test cases FILE: " << path.string());
 
     std::ifstream f(path);
     json data = json::parse(f);
