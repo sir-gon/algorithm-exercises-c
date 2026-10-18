@@ -31,7 +31,7 @@ SRC_DIR = src
 FILES := $(shell find $(SRC_DIR) -name '*.cpp' -o -name '*.c' -o -name '*.h' -o -name '*.hpp' -o -name '*.inl')
 
 .MAIN: test
-.PHONY: all clean dependencies help list test outdated
+.PHONY: all clean coverage dependencies help list test outdated
 .EXPORT_ALL_VARIABLES: # (2)
 
 define crono
@@ -117,18 +117,23 @@ format/json:
 
 format: format/sources format/json
 
-test: env dependencies build clean/test
-	cd build && make test
+test: env dependencies build clean/test test-no-deps
 
 test-no-deps:
-	cd build && make test
+	cd build && echo "current working directory: $(pwd)" && make test
 
-coverage: test
+coverage/report:
+	mkdir -p coverage
 	gcovr ${COVERAGE_TOOL_OPTS} \
 		--lcov coverage/coverage.lcov \
 		--sonarqube coverage/coverage.xml
 
-coverage/html: test
+coverage/test: test-no-deps coverage/report
+
+coverage: coverage/report
+
+coverage/html:
+	mkdir -p coverage
 	gcovr ${COVERAGE_TOOL_OPTS} \
 		--html-details coverage/index.html
 
@@ -187,7 +192,7 @@ compose/lint: compose/test/styling compose/test/static
 compose/lint/all: compose/lint/markdown compose/lint/yaml compose/lint/json compose/test/styling compose/test/static
 
 compose/test:
-	${DOCKER_COMPOSE} --profile testing run --rm algorithm-exercises-c-test make test-no-deps
+	${DOCKER_COMPOSE} --profile testing run --rm algorithm-exercises-c-test make coverage
 
 compose/run: compose/build
 	${DOCKER_COMPOSE} --profile production run --rm algorithm-exercises-c ls -alhR
