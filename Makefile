@@ -24,7 +24,18 @@ BUILDKIT_PROGRESS=plain
 DOCKER_COMPOSE=docker compose
 
 # TOOLS
-COVERAGE_TOOL_OPTS=--root . --filter 'src/lib/*' --exclude "tests/*" --exclude 'build/*' --txt --txt-metric line --txt-metric branch --print-summary
+COVERAGE_TOOL_OPTS = \
+    --root . \
+    --filter 'src/lib/*' \
+    --exclude "tests/*" \
+    --exclude 'build/*' \
+		--exclude-noncode-lines \
+    --exclude-throw-branches \
+    --exclude-unreachable-branches \
+    --txt \
+    --txt-metric line \
+    --txt-metric branch \
+    --print-summary
 
 # C++ specific
 SRC_DIR = src
