@@ -210,7 +210,7 @@ jobs:
         run: >
           docker
           run --rm ${{ env.IMAGE_NAME }}-${{ matrix.base_image }}:test
-          make test-no-deps
+          make coverage/test
 
   # yamllint disable rule:line-length
   # security:
