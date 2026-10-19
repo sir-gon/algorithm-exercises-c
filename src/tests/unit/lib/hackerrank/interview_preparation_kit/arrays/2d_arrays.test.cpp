@@ -23,14 +23,13 @@ TEST_CASE("hourglassSum JSON Test Cases",
   json data = json::parse(f);
 
   for (auto testcase : data) {
-
     std::vector<std::vector<int>> matrix = testcase["input"];
     std::vector<int *> rows;
     rows.reserve(matrix.size());
 
-    for (const auto &row : matrix) {
-      rows.push_back(const_cast<int *>(row.data()));
-    }
+    std::transform(
+        matrix.begin(), matrix.end(), std::back_inserter(rows),
+        [](const auto &row) { return const_cast<int *>(row.data()); });
 
     long long result = hourglassSum(
         static_cast<int>(matrix.size()),
