@@ -8,9 +8,6 @@
  */
 
 int *rotLeft(int a_count, const int *a, int d, int *result_count) {
-  if (result_count == NULL) {
-    return NULL;
-  }
 
   if (a == NULL || a_count <= 0) {
     *result_count = 0;

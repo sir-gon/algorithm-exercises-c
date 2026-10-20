@@ -3,7 +3,7 @@
 #include <nlohmann/json.hpp>
 
 // local libs
-#ifdef __linux__
+#if defined(__linux__)
 #include "../../../../../tools/memory_injector.hpp"
 #endif
 #include <exercises/hackerrank/interview_preparation_kit/arrays/ctci_array_left_rotation.h>
@@ -43,7 +43,10 @@ TEST_CASE("rotLeft JSON Test Cases", "[jsontestcase] [hackerrank] [arrays]") {
       std::free(const_cast<int *>(result));
     }
   }
+}
 
+TEST_CASE("rotLeft unhappy path cases",
+          "[jsontestcase] [hackerrank] [arrays]") {
   SECTION("rotLeft: Empty array") {
     int testcase_size = 5;
     int *a_input_array = nullptr;
@@ -56,9 +59,9 @@ TEST_CASE("rotLeft JSON Test Cases", "[jsontestcase] [hackerrank] [arrays]") {
     CHECK(result == nullptr);
   }
 
-  SECTION("rotLeft: Empty size") {
+  SECTION("rotLeft: Array with content but counter is 0") {
     int testcase_size = 0;
-    int a_input_array[1] = {1};
+    int a_input_array[4] = {1, 2, 3, 4};
     int d_rotations = 1;
     int result_size = 0;
 
@@ -68,15 +71,33 @@ TEST_CASE("rotLeft JSON Test Cases", "[jsontestcase] [hackerrank] [arrays]") {
     CHECK(result == nullptr);
   }
 
-  SECTION("rotLeft: Result size null") {
-    int testcase_size = 1;
-    int a_input_array[1] = {1};
+  SECTION("rotLeft: Array empty and counter is 0") {
+    int testcase_size = 0;
+    int *a_input_array = nullptr;
     int d_rotations = 1;
-    int *result_size = nullptr;
+    int result_size = 0;
 
     const int *result = rotLeft(testcase_size, const_cast<int *>(a_input_array),
-                                d_rotations, result_size);
+                                d_rotations, &result_size);
 
     CHECK(result == nullptr);
   }
+
+#if defined(__linux__)
+  SECTION("rotLeft: Failure handling during Out of Memory (OOM)") {
+    MemoryInjector::enable_oom_fault();
+
+    int testcase_size = 4;
+    int a_input_array[4] = {1, 2, 3, 4};
+    int d_rotations = 1;
+    int result_size = 0;
+
+    auto result = rotLeft(testcase_size, const_cast<int *>(a_input_array),
+                          d_rotations, &result_size);
+    REQUIRE(result == nullptr);
+
+    // Clean up the state after finishing the test section
+    MemoryInjector::disable_fault();
+  }
+#endif
 }
