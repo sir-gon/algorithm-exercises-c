@@ -9,6 +9,7 @@
 #include <exercises/hackerrank/interview_preparation_kit/arrays/ctci_array_left_rotation.h>
 
 // std libs
+#include <cstdlib>
 #include <filesystem>
 #include <fstream>
 #include <vector>
@@ -38,6 +39,8 @@ TEST_CASE("rotLeft JSON Test Cases", "[jsontestcase] [hackerrank] [arrays]") {
 
       const std::vector<int> result_vector(result, result + testcase_size);
       CHECK(result_vector == testcase["expected"].get<std::vector<int>>());
+
+      std::free(const_cast<int *>(result));
     }
   }
 
