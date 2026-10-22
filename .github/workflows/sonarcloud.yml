@@ -55,13 +55,20 @@ jobs:
           echo "-----------"
           cc --version
           echo "-----------"
+          gcc --version
+          echo "-----------"
+          g++ --version
+          echo "-----------"
           make --version
           echo "-----------"
           cmake --version
           echo "-----------"
           vcpkg --version
           echo "-----------"
+          gcov --version
+          echo "-----------"
           gcovr --version
+          echo "-----------"
 
       - name: Install dependencies
         run: |
@@ -73,6 +80,7 @@ jobs:
 
       - name: Run build-wrapper
         run: |
+          export PATH="$VCPKG_ROOT:$PATH"
           build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} make build
 
       - name: Make coverage report
