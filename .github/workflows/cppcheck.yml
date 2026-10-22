@@ -17,9 +17,29 @@ jobs:
     name: CppCheck Lint
     runs-on: ubuntu-26.04
 
+    env:
+      VCPKG_VERSION: 2026.10.16
+      VCPKG_ROOT: ${{ github.workspace }}/vcpkg
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Checkout vcpkg
+        uses: actions/checkout@v5
+        with:
+          repository: microsoft/vcpkg
+          ref: ${{ env.VCPKG_VERSION }}
+          path: vcpkg
+
+      - name: Install/Adjust VCPKG
+        shell: bash
+        run: |
+          export VCPKG_VERSION=${{ env.VCPKG_VERSION }}
+          export VCPKG_ROOT="$GITHUB_WORKSPACE/vcpkg"
+          sh "$VCPKG_ROOT/bootstrap-vcpkg.sh"
+          echo "$VCPKG_ROOT" >> "$GITHUB_PATH"
+          echo "VCPKG_ROOT=$VCPKG_ROOT" >> "$GITHUB_ENV"
 
       - name: Install tools
         run: |
@@ -30,9 +50,18 @@ jobs:
 
       - name: Check Tools
         run: |
+          export PATH="$VCPKG_ROOT:$PATH"
+          echo "-----------"
+          cc --version
+          echo "-----------"
+          make --version
+          echo "-----------"
+          cmake --version
+          echo "-----------"
+          vcpkg --version
+          echo "-----------"
           cppcheck --version
 
       - name: Lint
         run: |
-          export VCPKG_ROOT=/usr/local/share/vcpkg
           make test/static
