@@ -49,7 +49,11 @@ jobs:
         run: |
           export PATH="$VCPKG_ROOT:$PATH"
           echo "-----------"
+          cc --version
+          echo "-----------"
           gcc --version
+          echo "-----------"
+          g++ --version
           echo "-----------"
           make --version
           echo "-----------"
@@ -57,7 +61,10 @@ jobs:
           echo "-----------"
           vcpkg --version
           echo "-----------"
+          gcov --version
+          echo "-----------"
           gcovr --version
+          echo "-----------"
 
       - name: Install dependencies
         run: |
