@@ -8,8 +8,6 @@
 
 static inline long exercise_max_long(long a, long b) { return a > b ? a : b; }
 
-static inline long exercise_min_long(long a, long b) { return a < b ? a : b; }
-
 long arrayManipulation(int n, int queries_rows, int queries_columns,
                        int **queries) {
   // why adding 2?
