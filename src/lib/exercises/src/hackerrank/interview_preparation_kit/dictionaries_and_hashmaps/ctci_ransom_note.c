@@ -71,7 +71,7 @@ static bool checkMagazineCompute(int magazine_count, char **magazine,
     if (new_word_count == NULL) {
       // Handle memory allocation failure
       free_word_count_buckets(buckets);
-      exit(EXIT_FAILURE);
+      return false;
     }
     snprintf(new_word_count->word, sizeof(new_word_count->word), "%s", word);
     new_word_count->count = 1;
