@@ -39,8 +39,20 @@ static WordCount *find_word_count(WordCount *bucket, const char *word) {
   return NULL;
 }
 
+static void free_word_count_buckets(WordCount *buckets[256]) {
+  for (int i = 0; i < 256; ++i) {
+    WordCount *current = buckets[i];
+    while (current != NULL) {
+      WordCount *next = current->next;
+      free(current);
+      current = next;
+    }
+  }
+}
+
 static bool checkMagazineCompute(int magazine_count, char **magazine,
                                  int note_count, char **note) {
+  bool result = true;
 
   // build dictionary from magazine
   WordCount *buckets[256] = {NULL};
@@ -58,6 +70,7 @@ static bool checkMagazineCompute(int magazine_count, char **magazine,
     WordCount *new_word_count = malloc(sizeof(WordCount));
     if (new_word_count == NULL) {
       // Handle memory allocation failure
+      free_word_count_buckets(buckets);
       exit(EXIT_FAILURE);
     }
     snprintf(new_word_count->word, sizeof(new_word_count->word), "%s", word);
@@ -72,16 +85,15 @@ static bool checkMagazineCompute(int magazine_count, char **magazine,
     int hash = hash_function(word);
     WordCount *current = find_word_count(buckets[hash], word);
 
-    if (current == NULL) {
-      return false;
-    }
-    if (current->count <= 0) {
-      return false;
+    if (current == NULL || current->count <= 0) {
+      result = false;
+      break;
     }
     current->count--;
   }
 
-  return true;
+  free_word_count_buckets(buckets);
+  return result;
 }
 
 const char *checkMagazineText(int magazine_count, char **magazine,
