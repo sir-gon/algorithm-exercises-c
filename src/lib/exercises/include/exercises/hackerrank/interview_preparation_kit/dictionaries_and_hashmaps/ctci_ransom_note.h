@@ -13,8 +13,6 @@ void checkMagazine(int magazine_count, char **magazine, int note_count,
                    char **note);
 const char *checkMagazineText(int magazine_count, char **magazine,
                               int note_count, char **note);
-bool checkMagazineCompute(int magazine_count, char **magazine, int note_count,
-                          char **note);
 
 #ifdef __cplusplus
 } // extern "C"

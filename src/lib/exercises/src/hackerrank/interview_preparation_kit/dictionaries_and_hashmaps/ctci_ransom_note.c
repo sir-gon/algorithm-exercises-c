@@ -28,8 +28,19 @@ static int hash_function(const char *word) {
   return (int)word[0];
 }
 
-bool checkMagazineCompute(int magazine_count, char **magazine, int note_count,
-                          char **note) {
+static WordCount *find_word_count(WordCount *bucket, const char *word) {
+  while (bucket != NULL) {
+    if (strcmp(bucket->word, word) == 0) {
+      return bucket;
+    }
+    bucket = bucket->next;
+  }
+
+  return NULL;
+}
+
+static bool checkMagazineCompute(int magazine_count, char **magazine,
+                                 int note_count, char **note) {
 
   // build dictionary from magazine
   WordCount *buckets[256] = {NULL};
@@ -37,49 +48,37 @@ bool checkMagazineCompute(int magazine_count, char **magazine, int note_count,
   for (int i = 0; i < magazine_count; i++) {
     const char *word = magazine[i];
     int hash = hash_function(word);
-    WordCount *current = buckets[hash];
+    WordCount *current = find_word_count(buckets[hash], word);
 
-    while (current != NULL) {
-      if (strcmp(current->word, word) == 0) {
-        current->count++;
-        break;
-      }
-      current = current->next;
+    if (current != NULL) {
+      current->count++;
+      continue;
     }
 
-    if (current == NULL) {
-      WordCount *new_word_count = malloc(sizeof(WordCount));
-      if (new_word_count == NULL) {
-        // Handle memory allocation failure
-        exit(EXIT_FAILURE);
-      }
-      snprintf(new_word_count->word, sizeof(new_word_count->word), "%s", word);
-      new_word_count->count = 1;
-      new_word_count->next = buckets[hash];
-      buckets[hash] = new_word_count;
+    WordCount *new_word_count = malloc(sizeof(WordCount));
+    if (new_word_count == NULL) {
+      // Handle memory allocation failure
+      exit(EXIT_FAILURE);
     }
+    snprintf(new_word_count->word, sizeof(new_word_count->word), "%s", word);
+    new_word_count->count = 1;
+    new_word_count->next = buckets[hash];
+    buckets[hash] = new_word_count;
   }
 
   // Search words in the note and check if they exist in the magazine dictionary
   for (int i = 0; i < note_count; i++) {
     const char *word = note[i];
     int hash = hash_function(word);
-    WordCount *current = buckets[hash];
-
-    while (current != NULL) {
-      if (strcmp(current->word, word) == 0) {
-        if (current->count <= 0) {
-          return false;
-        }
-        current->count--;
-        break;
-      }
-      current = current->next;
-    }
+    WordCount *current = find_word_count(buckets[hash], word);
 
     if (current == NULL) {
       return false;
     }
+    if (current->count <= 0) {
+      return false;
+    }
+    current->count--;
   }
 
   return true;
@@ -94,6 +93,7 @@ const char *checkMagazineText(int magazine_count, char **magazine,
   }
 }
 
+// cppcheck-suppress[unusedFunction]
 void checkMagazine(int magazine_count, char **magazine, int note_count,
                    char **note) {
   printf("%s\n", checkMagazineText(magazine_count, magazine, note_count, note));
