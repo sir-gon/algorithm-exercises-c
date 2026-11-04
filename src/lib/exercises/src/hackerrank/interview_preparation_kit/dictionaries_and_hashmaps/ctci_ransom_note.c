@@ -105,7 +105,6 @@ const char *checkMagazineText(int magazine_count, char **magazine,
   }
 }
 
-// cppcheck-suppress[unusedFunction]
 void checkMagazine(int magazine_count, char **magazine, int note_count,
                    char **note) {
   printf("%s\n", checkMagazineText(magazine_count, magazine, note_count, note));
