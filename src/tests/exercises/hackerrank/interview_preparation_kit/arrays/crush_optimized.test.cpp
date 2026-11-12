@@ -4,7 +4,7 @@
 
 // local libs
 #if defined(__linux__)
-#include "../../../../../tools/memory_injector.hpp"
+#include <tools/memory_injector.hpp>
 #endif
 #include <exercises/hackerrank/interview_preparation_kit/arrays/crush.h>
 
@@ -17,7 +17,7 @@
 
 using json = nlohmann::json;
 
-TEST_CASE("arrayManipulation JSON Test Cases",
+TEST_CASE("arrayManipulation (optimized) JSON Test Cases",
           "[jsontestcase] [hackerrank] [arrays]") {
   SECTION("arrayManipulation: Normal workflow") {
     std::filesystem::path path =
@@ -41,15 +41,15 @@ TEST_CASE("arrayManipulation JSON Test Cases",
       std::transform(queries.begin(), queries.end(), queries_ptr.begin(),
                      [](auto &row) { return row.data(); });
 
-      const int result = arrayManipulation(testcase["n"], queries_rows,
-                                           queries_columns, queries_ptr.data());
+      const int result = arrayManipulationOptimized(
+          testcase["n"], queries_rows, queries_columns, queries_ptr.data());
 
       CHECK(result == testcase["expected"]);
     }
   }
 }
 
-TEST_CASE("arrayManipulation unhappy path cases",
+TEST_CASE("arrayManipulation (optimized) unhappy path cases",
           "[jsontestcase] [hackerrank] [arrays]") {
 #if defined(__linux__)
   SECTION("arrayManipulation: Failure handling during Out of Memory (OOM)") {
@@ -58,7 +58,7 @@ TEST_CASE("arrayManipulation unhappy path cases",
     int testcase_n = 10;
     int **queries_matrix = nullptr;
 
-    auto result = arrayManipulation(testcase_n, 3, 3, queries_matrix);
+    auto result = arrayManipulationOptimized(testcase_n, 3, 3, queries_matrix);
     REQUIRE(result == 0);
 
     // Clean up the state after finishing the test section

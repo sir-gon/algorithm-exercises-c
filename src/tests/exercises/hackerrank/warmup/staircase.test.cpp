@@ -4,7 +4,7 @@
 
 // local libs
 #if defined(__linux__)
-#include "../../../../tools/memory_injector.hpp"
+#include <tools/memory_injector.hpp>
 #endif
 #include <exercises/hackerrank/warmup/staircase.h>
 
