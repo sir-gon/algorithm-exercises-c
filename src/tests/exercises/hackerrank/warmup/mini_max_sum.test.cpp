@@ -4,7 +4,7 @@
 
 // local libs
 #ifdef __linux__
-#include "../../../../tools/memory_injector.hpp"
+#include <tools/memory_injector.hpp>
 #endif
 #include <exercises/hackerrank/warmup/mini_max_sum.h>
 

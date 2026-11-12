@@ -1,22 +1,24 @@
+// 3rd party libs
 #include <catch2/catch_test_macros.hpp>
+#include <nlohmann/json.hpp>
 
+// local libs
 #include <exercises/hackerrank/projecteuler/euler001.h>
+
+// std libs
+#include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <vector>
 
-#include <filesystem>
-#include <fstream>
-#include <nlohmann/json.hpp>
 using json = nlohmann::json;
 
 TEST_CASE("euler001 JSON Test Cases",
           "[hackerrank] [jsontestcase] [projecteuler]") {
-  std::filesystem::path cwd = std::filesystem::current_path();
-  std::string path =
-      cwd.string() +
-      "/unit/lib/hackerrank/projecteuler/euler001.testcases.json";
+  std::filesystem::path path =
+      std::filesystem::path(__FILE__).parent_path() / "euler001.testcases.json";
 
-  INFO("euler001 JSON test cases FILE: " << path);
+  INFO("euler001 JSON test cases FILE: " << path.string());
 
   std::ifstream f(path);
   json data = json::parse(f);
