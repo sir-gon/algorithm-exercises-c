@@ -3,10 +3,8 @@
 #include <nlohmann/json.hpp>
 
 // local libs
-#if defined(__linux__)
-#include <tools/memory_injector.hpp>
-#endif
 #include <exercises/hackerrank/warmup/staircase.h>
+#include <tools/memory_injector.hpp>
 
 // std libs
 #include <filesystem>
@@ -16,7 +14,6 @@
 using json = nlohmann::json;
 
 TEST_CASE("staircase JSON Test Cases", "[hackerrank] [jsontestcase] [warmup]") {
-#if defined(__linux__)
   SECTION("staircase: Failure handling during Out of Memory (OOM)") {
     int input = 4;
 
@@ -32,7 +29,6 @@ TEST_CASE("staircase JSON Test Cases", "[hackerrank] [jsontestcase] [warmup]") {
     REQUIRE_NOTHROW(HACKERRANK_WARMUP_staircase(input));
     MemoryInjector::disable_fault();
   }
-#endif
 
   SECTION("plusMinus: Normal memory allocation succeeds") {
     std::filesystem::path path = std::filesystem::path(__FILE__).parent_path() /

@@ -5,8 +5,9 @@
  */
 
 #include <exercises/basic/common.h>
-#include <stdio.h>  // malloc
+#include <stdio.h>
 #include <stdlib.h> // snprintf
+#include <tools/memory_allocator.h>
 
 char *HACKERRANK_WARMUP_miniMaxSumCalculate(int arr_count, const int *arr) {
   if (arr_count < 2) {
@@ -26,7 +27,7 @@ char *HACKERRANK_WARMUP_miniMaxSumCalculate(int arr_count, const int *arr) {
   }
 
   const int BUFFER_MAX_SIZE = 100;
-  char *buffer = malloc(BUFFER_MAX_SIZE * sizeof(char));
+  char *buffer = memory_allocator_malloc(BUFFER_MAX_SIZE * sizeof(char));
   if (buffer == NULL) {
     return NULL;
   }

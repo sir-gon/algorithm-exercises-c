@@ -3,10 +3,8 @@
 #include <nlohmann/json.hpp>
 
 // local libs
-#ifdef __linux__
-#include <tools/memory_injector.hpp>
-#endif
 #include <exercises/hackerrank/warmup/time_conversion.h>
+#include <tools/memory_injector.hpp>
 
 // std libs
 #include <filesystem>
@@ -16,7 +14,6 @@ using json = nlohmann::json;
 
 TEST_CASE("time_conversion JSON Test Cases",
           "[hackerrank] [jsontestcase] [warmup]") {
-#ifdef __linux__
   SECTION("time_conversion Failure handling during Out of Memory (OOM)") {
     MemoryInjector::enable_oom_fault();
 
@@ -27,7 +24,6 @@ TEST_CASE("time_conversion JSON Test Cases",
     // Clean up the state after finishing the test section
     MemoryInjector::disable_fault();
   }
-#endif
 
   SECTION("Normal memory allocation succeeds") {
     std::filesystem::path path = std::filesystem::path(__FILE__).parent_path() /

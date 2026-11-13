@@ -2,6 +2,7 @@
 
 #include <exercises/basic/common.h>
 #include <exercises/hackerrank/warmup/compare_triplets.h>
+#include <tools/memory_allocator.h>
 
 /**
  * @link Problem definition [[docs/hackerrank/warmup/compare_triplets.md]]
@@ -11,7 +12,7 @@ int *HACKERRANK_WARMUP_compareTriplets(int a_count, const int *a, int b_count,
                                        const int *b, int *result_count) {
 
   *result_count = 2;
-  int *awards = malloc(sizeof(int) * *result_count);
+  int *awards = memory_allocator_malloc(sizeof(int) * *result_count);
   if (awards == NULL) {
     return NULL;
   }

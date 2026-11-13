@@ -113,7 +113,8 @@ test/static-no-deps:
 		--inline-suppr \
 		--error-exitcode=13 \
 		--suppress=missingIncludeSystem \
-		--showtime=summary
+		--suppress=unmatchedSuppression \
+	&& echo '✔  Your code looks good.'
 
 test/static: prebuild test/static-no-deps
 

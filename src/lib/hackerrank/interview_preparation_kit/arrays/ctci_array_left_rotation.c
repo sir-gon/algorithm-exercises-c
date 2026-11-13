@@ -1,6 +1,7 @@
 #include <stdlib.h>
 
 #include <exercises/hackerrank/interview_preparation_kit/arrays/ctci_array_left_rotation.h>
+#include <tools/memory_allocator.h>
 
 /**
  * @link Problem definition
@@ -14,7 +15,7 @@ int *rotLeft(int a_count, const int *a, int d, int *result_count) {
     return NULL;
   }
 
-  int *result = malloc((size_t)a_count * sizeof(*result));
+  int *result = memory_allocator_malloc((size_t)a_count * sizeof(*result));
   if (result == NULL) {
     *result_count = 0;
     return NULL;

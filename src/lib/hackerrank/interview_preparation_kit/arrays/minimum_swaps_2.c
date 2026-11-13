@@ -1,6 +1,7 @@
 #include <stdlib.h>
 
 #include <exercises/hackerrank/interview_preparation_kit/arrays/minimum_swaps_2.h>
+#include <tools/memory_allocator.h>
 
 /**
  * @link Problem definition
@@ -9,7 +10,7 @@
 
 // cppcheck-suppress constParameterPointer
 int minimumSwaps(int arr_count, int *arr) {
-  int *indexed_group = malloc(arr_count * sizeof(int));
+  int *indexed_group = memory_allocator_malloc(arr_count * sizeof(int));
   if (indexed_group == NULL) {
     return -1;
   }
