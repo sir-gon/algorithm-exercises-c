@@ -3,10 +3,8 @@
 #include <nlohmann/json.hpp>
 
 // local libs
-#if defined(__linux__)
-#include <tools/memory_injector.hpp>
-#endif
 #include <exercises/hackerrank/interview_preparation_kit/arrays/ctci_array_left_rotation.h>
+#include <tools/memory_injector.hpp>
 
 // std libs
 #include <cstdlib>
@@ -83,7 +81,6 @@ TEST_CASE("rotLeft unhappy path cases",
     CHECK(result == nullptr);
   }
 
-#if defined(__linux__)
   SECTION("rotLeft: Failure handling during Out of Memory (OOM)") {
     MemoryInjector::enable_oom_fault();
 
@@ -92,12 +89,11 @@ TEST_CASE("rotLeft unhappy path cases",
     int d_rotations = 1;
     int result_size = 0;
 
-    auto result = rotLeft(testcase_size, const_cast<int *>(a_input_array),
-                          d_rotations, &result_size);
+    const int *result = rotLeft(testcase_size, const_cast<int *>(a_input_array),
+                                d_rotations, &result_size);
     REQUIRE(result == nullptr);
 
     // Clean up the state after finishing the test section
     MemoryInjector::disable_fault();
   }
-#endif
 }

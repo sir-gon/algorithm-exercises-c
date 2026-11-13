@@ -4,13 +4,14 @@
  * @link Problem definition [[docs/hackerrank/warmup/plus_minus.md]]
  */
 
-#include <stdio.h>  // malloc
+#include <stdio.h>
 #include <stdlib.h> // snprintf
+#include <tools/memory_allocator.h>
 
 const int BUFFER_MAX_SIZE = 10;
 
 char *format_result(double number) {
-  char *buffer = malloc(BUFFER_MAX_SIZE * sizeof(char));
+  char *buffer = memory_allocator_malloc(BUFFER_MAX_SIZE * sizeof(char));
   if (buffer == NULL) {
     return NULL;
   }
@@ -47,7 +48,8 @@ char **HACKERRANK_WARMUP_plusMinusCalculate(int arr_count, const int *arr) {
                              (double)zeros / arr_count};
 
   int n = 3; // Número de strings (puede ser arbitrario)
-  char **answer = malloc(n * sizeof(char *)); // Array de punteros
+  char **answer =
+      memory_allocator_malloc(n * sizeof(char *)); // Array de punteros
   if (answer == NULL) {
     return NULL;
   }

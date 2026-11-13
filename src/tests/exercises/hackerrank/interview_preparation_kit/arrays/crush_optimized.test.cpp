@@ -3,10 +3,8 @@
 #include <nlohmann/json.hpp>
 
 // local libs
-#if defined(__linux__)
-#include <tools/memory_injector.hpp>
-#endif
 #include <exercises/hackerrank/interview_preparation_kit/arrays/crush.h>
+#include <tools/memory_injector.hpp>
 
 // std libs
 #include <algorithm>
@@ -51,7 +49,6 @@ TEST_CASE("arrayManipulation (optimized) JSON Test Cases",
 
 TEST_CASE("arrayManipulation (optimized) unhappy path cases",
           "[jsontestcase] [hackerrank] [arrays]") {
-#if defined(__linux__)
   SECTION("arrayManipulation: Failure handling during Out of Memory (OOM)") {
     MemoryInjector::enable_oom_fault();
 
@@ -64,5 +61,4 @@ TEST_CASE("arrayManipulation (optimized) unhappy path cases",
     // Clean up the state after finishing the test section
     MemoryInjector::disable_fault();
   }
-#endif
 }

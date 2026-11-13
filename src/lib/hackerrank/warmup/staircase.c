@@ -4,18 +4,21 @@
  * @link Problem definition [[docs/hackerrank/warmup/staircase.md]]
  */
 
-#include <stdio.h>  // malloc
+#include <stdio.h>
 #include <stdlib.h> // snprintf
+#include <tools/memory_allocator.h>
 
 char **HACKERRANK_WARMUP_staircaseCalculate(int n) {
 
-  char **answer = malloc(n * sizeof(char *)); // Array of char pointers
+  char **answer =
+      memory_allocator_malloc(n * sizeof(char *)); // Array of char pointers
   if (answer == NULL) {
     return NULL;
   }
 
   for (int i = 0; i < n; i++) {
-    char *line = malloc((n + 1) * sizeof(char)); // Array of char values
+    char *line =
+        memory_allocator_malloc((n + 1) * sizeof(char)); // Array of char values
     if (line == NULL) {
       HACKERRANK_WARMUP_freeStaircase(answer, i);
       return NULL;

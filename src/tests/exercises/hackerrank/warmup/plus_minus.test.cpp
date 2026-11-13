@@ -3,10 +3,8 @@
 #include <nlohmann/json.hpp>
 
 // local libs
-#ifdef __linux__
-#include <tools/memory_injector.hpp>
-#endif
 #include <exercises/hackerrank/warmup/plus_minus.h>
+#include <tools/memory_injector.hpp>
 
 // std libs
 #include <filesystem>
@@ -16,12 +14,9 @@
 using json = nlohmann::json;
 
 TEST_CASE("plusMinus JSON Test Cases", "[hackerrank] [jsontestcase] [warmup]") {
-#ifdef __linux__
   SECTION("Failure handling during Out of Memory (OOM)") {
-    // MemoryInjector::enable_oom_fault();
-
-    int input_size = 3;
-    int input_array[] = {1, -2, 0};
+    const int input_size = 3;
+    const int input_array[] = {1, -2, 0};
 
     MemoryInjector::fail_on_allocation_number(1);
     REQUIRE(HACKERRANK_WARMUP_plusMinusCalculate(input_size, input_array) ==
@@ -42,7 +37,6 @@ TEST_CASE("plusMinus JSON Test Cases", "[hackerrank] [jsontestcase] [warmup]") {
     // Clean up the state after finishing the test section
     MemoryInjector::disable_fault();
   }
-#endif
 
   SECTION("Normal memory allocation succeeds") {
     // Reset the injector state before every section running

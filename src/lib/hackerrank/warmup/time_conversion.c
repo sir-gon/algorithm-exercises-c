@@ -5,8 +5,9 @@
  */
 
 #include <stdio.h>  // snprintf
-#include <stdlib.h> // malloc, free, strtol
+#include <stdlib.h> // free, strtol
 #include <string.h> // strcmp, strnlen
+#include <tools/memory_allocator.h>
 
 #define HACKERRANK_WARMUP_LONG_TIME_FORMAT_SIZE 10
 #define HACKERRANK_WARMUP_SHORT_TIME_FORMAT_SIZE 8
@@ -51,8 +52,8 @@ char *HACKERRANK_WARMUP_timeConversion(const char *s) {
     hour += 12;
   }
 
-  char *conversion =
-      malloc((HACKERRANK_WARMUP_SHORT_TIME_FORMAT_SIZE + 1) * sizeof(char));
+  char *conversion = memory_allocator_malloc(
+      (HACKERRANK_WARMUP_SHORT_TIME_FORMAT_SIZE + 1) * sizeof(char));
 
   if (conversion == NULL) {
     return NULL;

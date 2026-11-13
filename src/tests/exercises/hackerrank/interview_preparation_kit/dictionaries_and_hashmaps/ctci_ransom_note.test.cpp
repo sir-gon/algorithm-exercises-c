@@ -129,7 +129,6 @@ TEST_CASE("checkMagazine unhappy path cases",
     CHECK(result == __RANSOM_NOTE_NO__);
   }
 
-#if defined(__linux__)
   SECTION("arrayManipulation: Failure handling during Out of Memory (OOM)") {
     MemoryInjector::enable_oom_fault();
 
@@ -149,5 +148,4 @@ TEST_CASE("checkMagazine unhappy path cases",
     // Clean up the state after finishing the test section
     MemoryInjector::disable_fault();
   }
-#endif
 }

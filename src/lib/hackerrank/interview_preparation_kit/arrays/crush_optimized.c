@@ -1,5 +1,6 @@
 #include <exercises/hackerrank/interview_preparation_kit/arrays/crush.h>
 #include <stdlib.h>
+#include <tools/memory_allocator.h>
 
 /**
  * @link Problem definition
@@ -13,7 +14,7 @@ long arrayManipulationOptimized(int n, int queries_rows, int queries_columns,
   // why adding 2?
   //   first slot to adjust 1-based index and
   //   last slot for storing accum_sum result
-  int *result = malloc((size_t)(n + 2) * sizeof(int));
+  int *result = memory_allocator_malloc((size_t)(n + 2) * sizeof(int));
   if (result == NULL) {
     return 0L;
   }

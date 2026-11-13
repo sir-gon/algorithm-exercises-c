@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h> // printf
+#include <tools/memory_allocator.h>
 
 const char *__RANSOM_NOTE_YES__ = "Yes";
 const char *__RANSOM_NOTE_NO__ = "No";
@@ -67,7 +68,7 @@ static bool checkMagazineCompute(int magazine_count, char **magazine,
       continue;
     }
 
-    WordCount *new_word_count = malloc(sizeof(WordCount));
+    WordCount *new_word_count = memory_allocator_malloc(sizeof(WordCount));
     if (new_word_count == NULL) {
       // Handle memory allocation failure
       free_word_count_buckets(buckets);
