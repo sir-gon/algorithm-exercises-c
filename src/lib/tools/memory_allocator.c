@@ -5,7 +5,7 @@
 static memory_allocator_malloc_fn memory_allocator_impl = malloc;
 
 void memory_allocator_set_malloc(memory_allocator_malloc_fn allocator) {
-  memory_allocator_impl = (allocator == NULL) ? malloc : allocator;
+  memory_allocator_impl = (allocator == NULL) ? &malloc : allocator;
 }
 
 // cppcheck-suppress unusedFunction --- IGNORE ---
