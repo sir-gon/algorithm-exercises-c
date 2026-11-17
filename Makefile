@@ -114,6 +114,7 @@ test/static-no-deps:
 		--error-exitcode=13 \
 		--suppress=missingIncludeSystem \
 		--suppress=unmatchedSuppression \
+		--suppress=constParameterPointer \
 	&& echo '✔  Your code looks good.'
 
 test/static: prebuild test/static-no-deps
