@@ -4,10 +4,10 @@
  * @link Problem definition [[docs/hackerrank/warmup/time_conversion.md]]
  */
 
+#include <basic/memory_allocator.h>
 #include <stdio.h>  // snprintf
 #include <stdlib.h> // free, strtol
 #include <string.h> // strcmp, strnlen
-#include <tools/memory_allocator.h>
 
 #define HACKERRANK_WARMUP_LONG_TIME_FORMAT_SIZE 10
 #define HACKERRANK_WARMUP_SHORT_TIME_FORMAT_SIZE 8

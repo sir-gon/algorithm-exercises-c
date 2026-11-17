@@ -4,10 +4,10 @@
  * @link Problem definition [[docs/hackerrank/warmup/mini_max_sum.md]]
  */
 
-#include <exercises/basic/common.h>
+#include <basic/common.h>
+#include <basic/memory_allocator.h>
 #include <stdio.h>
 #include <stdlib.h> // snprintf
-#include <tools/memory_allocator.h>
 
 char *HACKERRANK_WARMUP_miniMaxSumCalculate(int arr_count, const int *arr) {
   if (arr_count < 2) {

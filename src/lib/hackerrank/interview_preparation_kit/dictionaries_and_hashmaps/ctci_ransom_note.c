@@ -1,9 +1,9 @@
+#include <basic/memory_allocator.h>
 #include <exercises/hackerrank/interview_preparation_kit/dictionaries_and_hashmaps/ctci_ransom_note.h>
 #include <stdbool.h> // bool
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h> // printf
-#include <tools/memory_allocator.h>
 
 const char *__RANSOM_NOTE_YES__ = "Yes";
 const char *__RANSOM_NOTE_NO__ = "No";

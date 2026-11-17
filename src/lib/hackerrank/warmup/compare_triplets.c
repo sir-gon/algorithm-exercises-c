@@ -1,8 +1,8 @@
 #include <stdlib.h>
 
-#include <exercises/basic/common.h>
+#include <basic/common.h>
+#include <basic/memory_allocator.h>
 #include <exercises/hackerrank/warmup/compare_triplets.h>
-#include <tools/memory_allocator.h>
 
 /**
  * @link Problem definition [[docs/hackerrank/warmup/compare_triplets.md]]

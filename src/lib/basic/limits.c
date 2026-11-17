@@ -1,4 +1,4 @@
-#include <exercises/basic/limits.h>
+#include <basic/limits.h>
 
 #include <stdio.h>
 

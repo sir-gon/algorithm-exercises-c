@@ -1,6 +1,6 @@
+#include <basic/memory_allocator.h>
 #include <exercises/hackerrank/interview_preparation_kit/arrays/crush.h>
 #include <stdlib.h>
-#include <tools/memory_allocator.h>
 
 /**
  * @link Problem definition

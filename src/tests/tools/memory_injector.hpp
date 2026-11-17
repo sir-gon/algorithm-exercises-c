@@ -1,5 +1,4 @@
 #pragma once
-#include <cstddef>
 
 namespace MemoryInjector {
 // Triggers an immediate malloc failure

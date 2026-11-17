@@ -1,6 +1,6 @@
 #include "memory_injector.hpp"
+#include <basic/memory_allocator.h>
 #include <cstdlib>
-#include <tools/memory_allocator.h>
 
 // Hidden state variables local to this translation unit
 static bool force_immediate_error = false;
