@@ -8,7 +8,7 @@ add_library(test_tools STATIC ${TOOLS_SOURCES})
 
 # The test tree is now under src/tests/exercises and src/tests/basics.
 # Keep the basics sanity checks in the same executable so they are discovered.
-file(GLOB_RECURSE SOURCES "basics/*.cpp" "exercises/*.cpp")
+file(GLOB_RECURSE SOURCES "basic/*.cpp" "exercises/*.cpp")
 add_executable(unit-tests_combined ${SOURCES})
 
 set_property(TARGET unit-tests_combined PROPERTY CXX_STANDARD 17)

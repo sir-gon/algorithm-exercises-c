@@ -1,7 +1,7 @@
 #include <stdlib.h>
 
+#include <basic/memory_allocator.h>
 #include <exercises/hackerrank/interview_preparation_kit/arrays/ctci_array_left_rotation.h>
-#include <tools/memory_allocator.h>
 
 /**
  * @link Problem definition

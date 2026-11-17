@@ -1,7 +1,7 @@
 #include <stdlib.h>
 
+#include <basic/memory_allocator.h>
 #include <exercises/hackerrank/interview_preparation_kit/arrays/minimum_swaps_2.h>
-#include <tools/memory_allocator.h>
 
 /**
  * @link Problem definition

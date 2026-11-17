@@ -4,9 +4,9 @@
  * @link Problem definition [[docs/hackerrank/warmup/staircase.md]]
  */
 
+#include <basic/memory_allocator.h>
 #include <stdio.h>
 #include <stdlib.h> // snprintf
-#include <tools/memory_allocator.h>
 
 char **HACKERRANK_WARMUP_staircaseCalculate(int n) {
 
