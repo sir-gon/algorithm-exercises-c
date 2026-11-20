@@ -20,8 +20,7 @@ TEST_CASE("euler001 JSON Test Cases",
 
   INFO("euler001 JSON test cases FILE: " << path.string());
 
-  std::ifstream f(path);
-  json data = json::parse(f);
+  json data = json::parse(std::ifstream(path));
 
   for (auto testcase : data) {
     int result = HACKERRANK_PROJECTEULER_euler001(testcase["a"], testcase["b"],

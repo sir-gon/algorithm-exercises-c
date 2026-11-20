@@ -31,8 +31,7 @@ TEST_CASE("time_conversion JSON Test Cases",
 
     INFO("time_conversion JSON test cases FILE: " << path.string());
 
-    std::ifstream f(path);
-    json data = json::parse(f);
+    json data = json::parse(std::ifstream(path));
 
     for (auto testcase : data) {
       char *result = HACKERRANK_WARMUP_timeConversion(

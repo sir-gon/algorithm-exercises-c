@@ -23,8 +23,7 @@ TEST_CASE("arrayManipulation (optimized) JSON Test Cases",
 
     INFO("arrayManipulation JSON test cases FILE: " << path.string());
 
-    std::ifstream f(path);
-    json data = json::parse(f);
+    json data = json::parse(std::ifstream(path));
 
     for (const auto &testcase : data) {
       const auto queries_rows = static_cast<int>(testcase["queries"].size());

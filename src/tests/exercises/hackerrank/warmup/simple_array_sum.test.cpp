@@ -18,8 +18,7 @@ TEST_CASE("simpleArraySum JSON Test Cases",
 
   INFO("simpleArraySum JSON test cases FILE: " << path.string());
 
-  std::ifstream f(path);
-  json data = json::parse(f);
+  json data = json::parse(std::ifstream(path));
 
   for (auto testcase : data) {
     auto size = static_cast<int>(testcase["input"].size());

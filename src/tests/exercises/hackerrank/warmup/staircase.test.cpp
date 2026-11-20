@@ -36,8 +36,7 @@ TEST_CASE("staircase JSON Test Cases", "[hackerrank] [jsontestcase] [warmup]") {
 
     INFO("staircase JSON test cases FILE: " << path.string());
 
-    std::ifstream f(path);
-    json data = json::parse(f);
+    json data = json::parse(std::ifstream(path));
 
     for (auto testcase : data) {
       auto input = static_cast<int>(testcase["input"]);
