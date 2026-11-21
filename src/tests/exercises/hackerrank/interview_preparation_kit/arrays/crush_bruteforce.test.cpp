@@ -27,7 +27,7 @@ TEST_CASE("arrayManipulation JSON Test Cases",
 
     for (const auto &testcase : data) {
       const auto queries_rows = static_cast<int>(testcase["queries"].size());
-      const int queries_columns = 3;
+      const long queries_columns = 3;
 
       std::vector<std::vector<int>> queries =
           testcase["queries"].get<std::vector<std::vector<int>>>();
@@ -38,8 +38,9 @@ TEST_CASE("arrayManipulation JSON Test Cases",
       std::transform(queries.begin(), queries.end(), queries_ptr.begin(),
                      [](auto &row) { return row.data(); });
 
-      const int result = arrayManipulation(testcase["n"], queries_rows,
-                                           queries_columns, queries_ptr.data());
+      long result =
+          arrayManipulation(testcase["n"].get<std::int32_t>(), queries_rows,
+                            queries_columns, queries_ptr.data());
 
       CHECK(result == testcase["expected"]);
     }

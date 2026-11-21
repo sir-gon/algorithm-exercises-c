@@ -24,7 +24,7 @@ TEST_CASE("minimumSwaps JSON Test Cases",
 
   for (auto testcase : data) {
     INFO("minimumSwaps JSON test case: " << testcase["title"]);
-    auto quantity = static_cast<size_t>(testcase["input"].size());
+    auto quantity = static_cast<int>(testcase["input"].size());
     std::vector<int> input_vector = testcase["input"].get<std::vector<int>>();
     int *input_array = input_vector.data();
 
@@ -37,9 +37,10 @@ TEST_CASE("minimumSwaps JSON Test Cases",
     MemoryInjector::enable_oom_fault();
 
     int testcase_size = 4;
-    int a_input_array[4] = {1, 2, 3, 4};
+    std::vector a_input_vector = {1, 2, 3, 4};
 
-    auto result = minimumSwaps(testcase_size, const_cast<int *>(a_input_array));
+    auto result =
+        minimumSwaps(testcase_size, const_cast<int *>(a_input_vector.data()));
     REQUIRE(result == -1);
 
     // Clean up the state after finishing the test section

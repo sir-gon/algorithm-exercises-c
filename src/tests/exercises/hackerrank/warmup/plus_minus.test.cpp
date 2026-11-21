@@ -16,7 +16,8 @@ using json = nlohmann::json;
 TEST_CASE("plusMinus JSON Test Cases", "[hackerrank] [jsontestcase] [warmup]") {
   SECTION("Failure handling during Out of Memory (OOM)") {
     const int input_size = 3;
-    const int input_array[] = {1, -2, 0};
+    std::vector input_vector = {1, -2, 0};
+    const int *input_array = input_vector.data();
 
     MemoryInjector::fail_on_allocation_number(1);
     REQUIRE(HACKERRANK_WARMUP_plusMinusCalculate(input_size, input_array) ==
