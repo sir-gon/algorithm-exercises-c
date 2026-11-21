@@ -20,9 +20,9 @@ TEST_CASE("miniMaxSum JSON Test Cases",
     MemoryInjector::enable_oom_fault();
 
     const int input_size = 3;
-    const int input_array[] = {1, -2, 0};
+    std::vector input_array = {1, -2, 0};
 
-    HACKERRANK_WARMUP_miniMaxSum(input_size, input_array);
+    HACKERRANK_WARMUP_miniMaxSum(input_size, input_array.data());
 
     // Clean up the state after finishing the test section
     MemoryInjector::disable_fault();
@@ -41,13 +41,20 @@ TEST_CASE("miniMaxSum JSON Test Cases",
       std::vector<int> input_vector = testcase["input"];
       const int *input_array = input_vector.data();
 
-      char *result =
+      char *raw_result =
           HACKERRANK_WARMUP_miniMaxSumCalculate(input_size, input_array);
       HACKERRANK_WARMUP_miniMaxSum(input_size, input_array);
 
-      std::string result_as_string(result);
+      REQUIRE(raw_result != nullptr);
 
-      free(result);
+      struct FreeDeleter {
+        void operator()(char *ptr) const {
+          std::free(ptr); // NOSONAR
+        }
+      };
+
+      auto result_as_string = std::string(raw_result);
+      std::unique_ptr<char, FreeDeleter> result_owner(raw_result);
 
       CHECK(result_as_string == testcase["expected"]);
     }
