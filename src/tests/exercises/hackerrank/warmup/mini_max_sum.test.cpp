@@ -34,8 +34,7 @@ TEST_CASE("miniMaxSum JSON Test Cases",
 
     INFO("miniMaxSum JSON test cases FILE: " << path.string());
 
-    std::ifstream f(path);
-    json data = json::parse(f);
+    json data = json::parse(std::ifstream(path));
 
     for (auto testcase : data) {
       auto input_size = static_cast<int>(testcase["input"].size());
