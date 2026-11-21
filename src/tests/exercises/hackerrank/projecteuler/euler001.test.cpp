@@ -23,8 +23,9 @@ TEST_CASE("euler001 JSON Test Cases",
   json data = json::parse(std::ifstream(path));
 
   for (auto testcase : data) {
-    int result = HACKERRANK_PROJECTEULER_euler001(testcase["a"], testcase["b"],
-                                                  testcase["n"]);
-    CHECK(result == testcase["expected"]);
+    unsigned long result = HACKERRANK_PROJECTEULER_euler001(
+        testcase["a"].get<int>(), testcase["b"].get<int>(),
+        testcase["n"].get<int>());
+    CHECK(result == testcase["expected"].get<unsigned long>());
   }
 }

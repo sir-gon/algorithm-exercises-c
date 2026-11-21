@@ -7,8 +7,10 @@
 #include <tools/memory_injector.hpp>
 
 // std libs
+#include <cstdlib>
 #include <filesystem>
 #include <fstream>
+#include <memory>
 #include <vector>
 
 using json = nlohmann::json;
@@ -18,11 +20,11 @@ TEST_CASE("compareTriplets JSON Test Cases",
   SECTION("compareTriplets: Failure handling during Out of Memory (OOM)") {
     MemoryInjector::enable_oom_fault();
 
-    std::vector<int> a_input_vector = {1, 2, 3, 4};
+    std::vector a_input_vector = {1, 2, 3, 4};
     auto a_size = static_cast<int>(a_input_vector.size());
     const int *a_input_array = a_input_vector.data();
 
-    std::vector<int> b_input_vector = {4, 3, 2, 1};
+    std::vector b_input_vector = {4, 3, 2, 1};
     auto b_size = static_cast<int>(b_input_vector.size());
     const int *b_input_array = b_input_vector.data();
     int result_count;
@@ -53,15 +55,23 @@ TEST_CASE("compareTriplets JSON Test Cases",
       const int *b_input_array = b_input_vector.data();
       int result_count;
 
-      int *result = HACKERRANK_WARMUP_compareTriplets(
+      int *raw_result = HACKERRANK_WARMUP_compareTriplets(
           a_size, a_input_array, b_size, b_input_array, &result_count);
 
-      // Crear un vector a partir del array en C
-      std::vector<int> result_as_vector(result, result + result_count);
+      REQUIRE(raw_result != nullptr);
+
+      struct FreeDeleter {
+        void operator()(int *ptr) const {
+          std::free(ptr); // NOSONAR
+        }
+      };
+
+      std::unique_ptr<int, FreeDeleter> result_owner(raw_result);
+
+      std::vector<int> result_as_vector(result_owner.get(),
+                                        result_owner.get() + result_count);
 
       CHECK(result_as_vector == testcase["expected"]);
-
-      free(result);
     }
   }
 }
