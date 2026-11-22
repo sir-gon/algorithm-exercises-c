@@ -24,7 +24,7 @@ TEST_CASE("minimumBribes JSON Test Cases",
 
   for (auto testcase : data) {
     INFO("minimumBribes JSON test case: " << testcase["title"]);
-    auto quantity = static_cast<size_t>(testcase["input"].size());
+    auto quantity = static_cast<int>(testcase["input"].size());
     std::vector<int> input_vector = testcase["input"];
     int *input_array = input_vector.data();
 
