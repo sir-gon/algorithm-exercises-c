@@ -5,8 +5,8 @@
  * [[docs/hackerrank/interview_preparation_kit/dictionaries_and_hashmaps/two-strings.md]]
  */
 
-const char *__TWO_STRINGS_YES__ = "YES";
-const char *__TWO_STRINGS_NO__ = "NO";
+static char __TWO_STRINGS_YES__[] = "YES";
+static char __TWO_STRINGS_NO__[] = "NO";
 
 char *twoStrings(char *s1, char *s2) {
   bool char_set[26] = {false};
