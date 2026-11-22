@@ -1,5 +1,6 @@
 #include <basic/memory_allocator.h>
 #include <exercises/hackerrank/interview_preparation_kit/dictionaries_and_hashmaps/count_triplets_1_optimized.h>
+#include <stdlib.h> // free
 
 /**
  * @link Problem definition
@@ -60,6 +61,17 @@ static Counter *insert_counter(Counter **bucket, long value, long how_many) {
   return new_counter;
 }
 
+static void free_counter_buckets(Counter *buckets[HASH_SIZE]) {
+  for (int i = 0; i < HASH_SIZE; ++i) {
+    Counter *current = buckets[i];
+    while (current != NULL) {
+      Counter *next = current->next;
+      free(current);
+      current = next;
+    }
+  }
+}
+
 long countTriplets(int arr_count, const long *arr, long r) {
   Counter *potential_twos[HASH_SIZE] = {NULL};
   Counter *potential_threes[HASH_SIZE] = {NULL};
@@ -98,6 +110,9 @@ long countTriplets(int arr_count, const long *arr, long r) {
       found_potential_two->count++;
     }
   }
+
+  free_counter_buckets(potential_twos);
+  free_counter_buckets(potential_threes);
 
   return counter;
 }
