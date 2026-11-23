@@ -38,7 +38,7 @@ TEST_CASE("arrayManipulation (optimized) JSON Test Cases",
       std::transform(queries.begin(), queries.end(), queries_ptr.begin(),
                      [](auto &row) { return row.data(); });
 
-      const int result = arrayManipulationOptimized(
+      const long result = arrayManipulationOptimized(
           testcase["n"], queries_rows, queries_columns, queries_ptr.data());
 
       CHECK(result == testcase["expected"]);

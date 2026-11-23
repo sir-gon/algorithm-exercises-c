@@ -85,30 +85,16 @@ long countTriplets(int arr_count, const long *arr, long r) {
       counter += found_potential_three->count;
     }
 
-    Counter *found_potential_two =
+    const Counter *found_potential_two =
         find_counter(potential_twos[hash(arr[i])], arr[i]);
 
     if (found_potential_two != NULL) {
       const long next_key = arr[i] * r;
-      Counter *found_next_potential_three =
-          find_counter(potential_threes[hash(next_key)], next_key);
-
-      if (found_next_potential_three == NULL) {
-        insert_counter(potential_threes, next_key, found_potential_two->count);
-      } else {
-        found_next_potential_three->count += found_potential_two->count;
-      }
+      insert_counter(potential_threes, next_key, found_potential_two->count);
     }
 
     const long next_key = arr[i] * r;
-    found_potential_two =
-        find_counter(potential_twos[hash(next_key)], next_key);
-
-    if (found_potential_two == NULL) {
-      insert_counter(potential_twos, next_key, 1);
-    } else {
-      found_potential_two->count++;
-    }
+    insert_counter(potential_twos, next_key, 1);
   }
 
   free_counter_buckets(potential_twos);

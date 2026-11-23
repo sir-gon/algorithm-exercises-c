@@ -1,9 +1,9 @@
 // 3rd party libs
 #include <catch2/catch_test_macros.hpp>
 #include <nlohmann/json.hpp>
-
 // local libs
 #include <exercises/hackerrank/interview_preparation_kit/dictionaries_and_hashmaps/count_triplets_1_optimized.h>
+#include <tools/memory_injector.hpp>
 
 // std libs
 #include <algorithm>
@@ -56,5 +56,20 @@ TEST_CASE("countTriplets (Optimized) JSON Test Cases Big cases",
 
       CHECK(result == expected);
     }
+  }
+}
+
+TEST_CASE("countTriplets (Optimized) OOM Test Case",
+          "[hackerrank] [jsontestcase] [dictionaries_and_hashmaps]") {
+  SECTION("countTriplets Failure handling during Out of Memory (OOM)") {
+    MemoryInjector::enable_oom_fault();
+
+    std::vector input_vector = {1L, 3L, 9L};
+    long r = 3;
+
+    REQUIRE_NOTHROW(countTriplets(input_vector.size(), input_vector.data(), r));
+
+    // Clean up the state after finishing the test section
+    MemoryInjector::disable_fault();
   }
 }

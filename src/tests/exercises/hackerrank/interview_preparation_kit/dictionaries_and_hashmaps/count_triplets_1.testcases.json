@@ -1,5 +1,23 @@
 [
   {
+    "title": "Own Test Case 0: repeated values",
+    "input": [3, 3, 3, 3, 3],
+    "r": 1,
+    "expected": 10
+  },
+  {
+    "title": "Own Test Case 1: hash table collision",
+    "input": [1009, 2018, 1009, 4036],
+    "r": 2,
+    "expected": 1
+  },
+  {
+    "title": "Own Test Case 2: negative progression",
+    "input": [-2, -4, -8],
+    "r": 2,
+    "expected": 1
+  },
+  {
     "title": "Sample Test Case 0",
     "input": [1, 2, 2, 4],
     "r": 2,
